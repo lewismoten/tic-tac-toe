@@ -39,6 +39,10 @@ describe("TicTacToe", function() {
       expect(ticTacToe.hasWinner).toEqual(false);
     });
     
+    it("has not ended", function() {
+      expect(ticTacToe.hasEnded).toEqual(false);
+    });
+
     it("is a new game", function() {
       expect(ticTacToe.isNewGame).toEqual(true);
     });
