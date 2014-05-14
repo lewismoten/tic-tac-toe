@@ -21,7 +21,7 @@ describe("TicTacToeBoard", function() {
       expect(board.getMark(0, 0)).toEqual(board.player1);
     });
     
-    it("changest the player", function() {
+    it("changes the player", function() {
       expect(board.player).toEqual(board.player2);
     });
     
@@ -30,7 +30,7 @@ describe("TicTacToeBoard", function() {
     });
   });
   
-  describe("draw", function() {
+  describe("on draw", function() {
     beforeEach(function() {
       board.mark(0, 0);
       board.mark(1, 0);
@@ -45,6 +45,6 @@ describe("TicTacToeBoard", function() {
     
     it("is no ones turn", function() {
       expect(board.player).toEqual(board.empty);
-    })
-  })
+    });
+  });
 });
