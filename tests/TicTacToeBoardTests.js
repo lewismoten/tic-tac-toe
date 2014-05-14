@@ -47,4 +47,15 @@ describe("TicTacToeBoard", function() {
       expect(board.player).toEqual(board.empty);
     });
   });
+  
+  describe("win", function() {
+    it("has three X on top row", function() {
+      board.mark(0, 0);
+      board.mark(0, 1);
+      board.mark(1, 0);
+      board.mark(1, 1);
+      board.mark(0, 2);
+      expect(board.winner).toEqual(board.player1);
+    });
+  });
 });
