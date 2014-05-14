@@ -5,30 +5,30 @@ describe("TicTacToe", function() {
     ticTacToe = new TicTacToe();
   });
 
-  it("has marks", function() {
-    expect(ticTacToe.marks).not.toBeNull();
-  });
-  
-  it("specifies an empty cell mark", function() {
-    expect(ticTacToe.marks.empty).toEqual(' ');
-  });
-  
-  it("specifies the player 1 mark", function() {
-    expect(ticTacToe.marks.playerOne).toEqual('X');
-  });
-  
-  it("specifies the player 2 mark", function() {
-    expect(ticTacToe.marks.playerTwo).toEqual('O');
-  });
-  
-  it("may start a new game", function() {
-    var board = ticTacToe.start();
-  });
-
-  describe("when a game has been started", function() {
+  describe("marks", function() {
+    var marks;
+    
     beforeEach(function() {
-      ticTacToe.start();
+      marks = ticTacToe.marks;
     });
+    
+    it("exists", function() {
+      expect(marks).not.toBeNull();
+    });
+    
+    it("has ' ' for empty cell", function() {
+      expect(marks.empty).toEqual(' ');
+    });
+    
+    it("has 'X' for player 1", function() {
+      expect(marks.playerOne).toEqual('X');
+    });
+    
+    it("has 'O' for player 2", function() {
+      expect(marks.playerTwo).toEqual('O');
+    });
+  });
+  
 
     it("must be no winner", function() {
       expect(ticTacToe.hasWinner).toEqual(false);
