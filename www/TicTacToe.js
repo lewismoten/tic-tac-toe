@@ -19,4 +19,5 @@ TicTacToe.prototype.new = function() {
 };
 
 TicTacToe.prototype.mark = function(column, row) {
+  return true;
 };

@@ -54,7 +54,7 @@ describe("TicTacToe", function() {
     });
     
     it("can mark an unoccupied cell", function(){
-      ticTacToe.mark(0, 0);
+      expect(ticTacToe.mark(0, 0)).toEqual(true);
     });
   });
   
