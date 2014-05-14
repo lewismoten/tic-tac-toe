@@ -44,22 +44,32 @@ describe("TicTacToe", function() {
     });
 
     it("is a new game", function() {
-      expect(ticTacToe.isNewGame).toEqual(true);
+      expect(ticTacToe.isNewGame()).toEqual(true);
+    });
+    
+    describe("mark first cell", function(){
+      beforeEach(function() {
+        ticTacToe.board.mark(0, 0);
+      });
+      
+      it("is not a new game", function() {
+        expect(ticTacToe.isNewGame()).toEqual(false);
+      });
     });
   });
   
-  describe("mark", function() {
+  describe("player", function() {
     beforeEach(function() {
       ticTacToe.new();
     });
     
     it("can mark an unoccupied cell", function(){
-      expect(ticTacToe.mark(0, 0)).toEqual(true);
+      expect(ticTacToe.board.mark(0, 0)).toEqual(true);
     });
     
     it("can not mark an occupied cell", function(){
-      ticTacToe.mark(0, 0);
-      expect(ticTacToe.mark(0, 0)).toEqual(false);
+      ticTacToe.board.mark(0, 0);
+      expect(ticTacToe.board.mark(0, 0)).toEqual(false);
     });
   });
   
