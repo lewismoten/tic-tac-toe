@@ -29,4 +29,22 @@ describe("TicTacToeBoard", function() {
       expect(board.mark(0, 0)).toEqual(false);
     });
   });
+  
+  describe("draw", function() {
+    beforeEach(function() {
+      board.mark(0, 0);
+      board.mark(1, 0);
+      board.mark(2, 0);
+      board.mark(0, 1);
+      board.mark(1, 1);
+      board.mark(2, 1);
+      board.mark(1, 2);
+      board.mark(0, 2);
+      board.mark(2, 2);
+    });
+    
+    it("is no ones turn", function() {
+      expect(board.player).toEqual(board.empty);
+    })
+  })
 });
