@@ -4,12 +4,29 @@ describe("TicTacToeBoard", function() {
     board = new TicTacToeBoard();
   });
   
+  it("starts with player 1", function() {
+    expect(board.player).toEqual(board.player1);
+  });
+  
   it("can mark an unoccupied cell", function(){
     expect(board.mark(0, 0)).toEqual(true);
   });
-  
-  it("can not mark an occupied cell", function(){
-    board.mark(0, 0);
-    expect(board.mark(0, 0)).toEqual(false);
+
+  describe("mark corner", function() {
+    beforeEach(function() {
+      board.mark(0, 0);
+    });
+    
+    it("occupies a cell", function() {
+      expect(board.getMark(0, 0)).toEqual(board.player1);
+    });
+    
+    it("changest the player", function() {
+      expect(board.player).toEqual(board.player2);
+    });
+    
+    it("can not mark an occupied cell", function(){
+      expect(board.mark(0, 0)).toEqual(false);
+    });
   });
 });

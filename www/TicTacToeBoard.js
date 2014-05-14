@@ -31,3 +31,7 @@ TicTacToeBoard.prototype.mark = function(column, row) {
   }
   return false;
 };
+
+TicTacToeBoard.prototype.getMark = function(column, row) {
+  return this.cell[column][row];
+}
