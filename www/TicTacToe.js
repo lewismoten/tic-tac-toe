@@ -10,7 +10,7 @@ function TicTacToe() {
   this.marks = new TicTacToeMarks();
 }
 
-TicTacToe.prototype.start = function() {
+TicTacToe.prototype.new = function() {
   this.hasWinner = false;
   this.isNewGame = true;
 };

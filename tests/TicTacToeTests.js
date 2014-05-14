@@ -29,12 +29,17 @@ describe("TicTacToe", function() {
     });
   });
   
+  it("may start a new game", function() {
+    var board = ticTacToe.new();
+  });
 
-    it("must be no winner", function() {
+  describe("new game", function() {
+
+    it("has no winner", function() {
       expect(ticTacToe.hasWinner).toEqual(false);
     });
     
-    it("must be a new game", function() {
+    it("is a new game", function() {
       expect(ticTacToe.isNewGame).toEqual(true);
     });
   });
