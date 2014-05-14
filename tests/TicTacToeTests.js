@@ -30,7 +30,7 @@ describe("TicTacToe", function() {
   });
   
   it("may start a new game", function() {
-    var board = ticTacToe.new();
+    ticTacToe.new();
   });
 
   describe("new game", function() {
