@@ -23,34 +23,18 @@ describe("TicTacToe", function() {
       expect(ticTacToe.hasEnded).toEqual(false);
     });
 
-    it("is a new game", function() {
-      expect(ticTacToe.isNewGame()).toEqual(true);
+    it("has empty board", function() {
+      expect(ticTacToe.board.isEmpty()).toEqual(true);
     });
     
-    describe("mark first cell", function(){
+    describe("marked", function(){
       beforeEach(function() {
         ticTacToe.board.mark(0, 0);
       });
       
-      it("is not a new game", function() {
-        expect(ticTacToe.isNewGame()).toEqual(false);
+      it("does not have an empty board", function() {
+        expect(ticTacToe.board.isEmpty()).toEqual(false);
       });
     });
   });
-  
-  describe("player", function() {
-    beforeEach(function() {
-      ticTacToe.new();
-    });
-    
-    it("can mark an unoccupied cell", function(){
-      expect(ticTacToe.board.mark(0, 0)).toEqual(true);
-    });
-    
-    it("can not mark an occupied cell", function(){
-      ticTacToe.board.mark(0, 0);
-      expect(ticTacToe.board.mark(0, 0)).toEqual(false);
-    });
-  });
-  
 });

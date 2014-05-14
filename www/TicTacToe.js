@@ -11,8 +11,3 @@ TicTacToe.prototype.new = function() {
   this.hasEnded = false;
   this.board = new TicTacToeBoard(this.marks.empty);
 };
-
-TicTacToe.prototype.isNewGame = function() {
-  return this.board.allCellsEqual(this.marks.empty);
-};
-
