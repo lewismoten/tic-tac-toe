@@ -13,7 +13,10 @@ describe("TicTacToe", function() {
     ticTacToe.new();
   });
 
-  describe("new game", function() {
+  describe("new", function() {
+      beforeEach(function() {
+        ticTacToe.new();
+      });
 
     it("has no winner", function() {
       expect(ticTacToe.hasWinner).toEqual(false);
@@ -35,6 +38,17 @@ describe("TicTacToe", function() {
       it("does not have an empty board", function() {
         expect(ticTacToe.board.isEmpty()).toEqual(false);
       });
+
+      describe("new", function(){
+        beforeEach(function() {
+          ticTacToe.new();
+        });
+        
+        it("has an empty board", function() {
+          expect(ticTacToe.board.isEmpty()).toEqual(true);
+        });
+      });
+
     });
   });
 });
