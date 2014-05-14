@@ -17,3 +17,6 @@ TicTacToe.prototype.new = function() {
   this.isNewGame = true;
   this.hasEnded = false;
 };
+
+TicTacToe.prototype.mark = function(column, row) {
+};

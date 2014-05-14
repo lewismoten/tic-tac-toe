@@ -48,4 +48,14 @@ describe("TicTacToe", function() {
     });
   });
   
+  describe("mark", function() {
+    beforeEach(function() {
+      ticTacToe.new();
+    });
+    
+    it("can mark an unoccupied cell", function(){
+      ticTacToe.mark(0, 0);
+    });
+  });
+  
 });
