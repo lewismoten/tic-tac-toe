@@ -9,6 +9,7 @@ function TicTacToe() {
   this.isNewGame = true;
   this.hasEnded = false;
   this.marks = new TicTacToeMarks();
+  this.cell = [[0,0,0],[0,0,0],[0,0,0]];
   
 }
 
@@ -19,5 +20,9 @@ TicTacToe.prototype.new = function() {
 };
 
 TicTacToe.prototype.mark = function(column, row) {
-  return true;
+  if(this.cell[column][row] === 0) {
+    this.cell[column][row] = 1;
+    return true;
+  }
+  return false;
 };
