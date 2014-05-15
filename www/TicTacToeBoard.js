@@ -3,66 +3,67 @@ function TicTacToeBoard() {
   this.player1 = 1;
   this.player2 = -1;
   this.player = 1;
+  
   this.winner = this.empty;
   
-  this.cell = new Array(3);
-  for(x = 0; x < this.cell.length; x++) {
-    this.cell[x] = new Array(3);
-    for(y = 0; y < this.cell[x].length; y++) {
-      this.cell[x][y] = this.empty;
+  var cell = new Array(3);
+  for(x = 0; x < cell.length; x++) {
+    cell[x] = new Array(3);
+    for(y = 0; y < cell[x].length; y++) {
+      cell[x][y] = this.empty;
     }
   }
+  
+  this.isEmpty = function() {
+    for(x = 0; x < cell.length; x++) {
+      for(y = 0; y < cell[x].length; y++) {
+        if(cell[x][y] != this.empty) return false;
+      }
+    }
+    return true;
+  };
+
+  this.mark = function(column, row) {
+    if(this.player == this.empty) return false;
+    if(cell[column][row] != this.empty) return false;
+    cell[column][row] = this.player;
+    this.checkForWinner();
+    this.changePlayer();
+    return true;
+  };
+
+  this.findWinner = function(x, y, stepX, stepY) {
+    var mark = cell[x][y];
+    if(mark == this.empty) return false;
+    var i = 0;
+    while(++i < 3)
+    {
+      var xx = x + (stepX * i);
+      var yy = y + (stepY * i);
+      if(mark != cell[xx][yy]) return false;
+    }
+    this.winner = mark;
+    return true;
+  };
+
+  this.isFull = function() {
+    for(x = 0; x < cell.length; x++) {
+      for(y = 0; y < cell[x].length; y++) {
+        if(cell[x][y] == this.empty) return false;
+      }
+    }
+    return true;
+  };
+
+  this.getMark = function(column, row) {
+    return cell[column][row];
+  };
 }
-
-TicTacToeBoard.prototype.isEmpty = function() {
-  for(x = 0; x < this.cell.length; x++) {
-    for(y = 0; y < this.cell[x].length; y++) {
-      if(this.cell[x][y] != this.empty) return false;
-    }
-  }
-  return true;
-};
-
-TicTacToeBoard.prototype.isFull = function() {
-  for(x = 0; x < this.cell.length; x++) {
-    for(y = 0; y < this.cell[x].length; y++) {
-      if(this.cell[x][y] == this.empty) return false;
-    }
-  }
-  return true;
-};
-
-TicTacToeBoard.prototype.mark = function(column, row) {
-  if(this.player == this.empty) return false;
-  if(this.cell[column][row] != this.empty) return false;
-  this.cell[column][row] = this.player;
-  this.checkForWinner();
-  this.changePlayer();
-  return true;
-};
 
 TicTacToeBoard.prototype.changePlayer = function() {
   this.player *= -1;
   if(this.isFull()) this.player = this.empty;
   if(this.winner != this.empty) this.player = this.empty;
-};
-
-TicTacToeBoard.prototype.getMark = function(column, row) {
-  return this.cell[column][row];
-};
-
-TicTacToeBoard.prototype.findWinner = function(x, y, stepX, stepY) {
-  var mark = this.cell[x][y];
-  if(mark == this.empty) return false;
-  var i = 0;
-  while(++i < 3)
-  {
-    var xx = x + (stepX * i);
-    var yy = y + (stepY * i);
-    if(mark != this.cell[xx][yy]) return false;
-  }
-  this.winner = mark;
-  return true;
 };
 
 TicTacToeBoard.prototype.checkForWinner = function() {
