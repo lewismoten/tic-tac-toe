@@ -1,11 +1,9 @@
-function TicTacToeMark(onMark) {
+function TicTacToeMark() {
   var firstPlayer = "X";
   var secondPlayer = "O";
   var empty = " ";
   var value = " ";
   
-  this.mark = onMark;
-
   this.markAsFirstPlayer = function() {
     if(value !== empty) return false;
     value = firstPlayer;

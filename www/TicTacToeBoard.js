@@ -7,30 +7,30 @@ function TicTacToeBoard() {
 
   this.getWinner = function() { return winner; };
   
-  var onMarkCell = function() {
-    if(board.isGameOver()) return false;
-    if(!this.data().isEmpty) return false;
-    if(board.getPlayer().isFirst)
-    {
-      if(this.markAsFirstPlayer() === false) throw new Exception("Mark failed");
-    }
-    else
-    {
-      if(this.markAsSecondPlayer() === false) throw new Exception("Mark failed");
-    }
-    board.checkForWinner();
-    board.changePlayer();
-    return true;
-  };
-  
   for(x = 0; x < 3; x++) {
     cell[x] = new Array(3);
     for(y = 0; y < 3; y++) {
-      cell[x][y] = new TicTacToeMark(onMarkCell);
+      cell[x][y] = new TicTacToeMark();
     }
   }
   
-  this.mark = function(x, y) { return cell[x][y].mark(); };
+  this.mark = function(x, y) {
+    var that = cell[x][y];
+    if(this.isGameOver()) return false;
+    if(!that.data().isEmpty) return false;
+    if(this.getPlayer().isFirst)
+    {
+      if(that.markAsFirstPlayer() === false) throw new Exception("Mark failed");
+    }
+    else
+    {
+      if(that.markAsSecondPlayer() === false) throw new Exception("Mark failed");
+    }
+    this.checkForWinner();
+    this.changePlayer();
+    return true;
+  };
+  
   this.getPlayer = function() {
     return {
       isFirst: player === 1,
