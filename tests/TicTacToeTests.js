@@ -24,7 +24,7 @@ describe("TicTacToe", function() {
     
     describe("marked", function(){
       beforeEach(function() {
-        ticTacToe.board.at(0, 0).mark();
+        ticTacToe.board.mark(0, 0);
       });
       
       it("does not have an empty board", function() {

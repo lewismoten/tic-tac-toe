@@ -30,6 +30,14 @@ function TicTacToeMark(onMark) {
     return true;
   };
   
+  this.data = function() {
+    return {
+      isPlayer1: this.isPlayer1(),
+      isPlayer2: this.isPlayer2(),
+      isEmpty: this.isEmpty(),
+      text: this.toString()
+      };
+  };
 }
 
 TicTacToeMark.prototype.toString = function() {
@@ -40,5 +48,7 @@ TicTacToeMark.prototype.toString = function() {
 };
 
 TicTacToeMark.prototype.equalTo = function(mark) {
-  return this.isEmpty() == mark.isEmpty() && this.isPlayer1() == mark.isPlayer1() && this.isPlayer2() == mark.isPlayer2();
+  return this.isEmpty() == mark.isEmpty()
+  && this.isPlayer1() == mark.isPlayer1()
+  && this.isPlayer2() == mark.isPlayer2();
 };

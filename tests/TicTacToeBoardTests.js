@@ -13,20 +13,20 @@ describe("TicTacToeBoard", function() {
   });
 
   it("can mark an unoccupied cell", function(){
-    expect(board.at(0, 0).mark()).toEqual(true);
+    expect(board.mark(0, 0)).toEqual(true);
   });
 
   describe("the first mark", function() {
     beforeEach(function() {
-      board.at(0, 0).mark();
+      board.mark(0, 0);
     });
     
     it("occupies a cell", function() {
-      expect(board.at(0, 0).isEmpty()).toEqual(false);
+      expect(board.at(0, 0).isEmpty).toEqual(false);
     });
     
     it("is player 1", function() {
-      expect(board.at(0, 0).isPlayer1()).toEqual(true);
+      expect(board.at(0, 0).isPlayer1).toEqual(true);
     });
     
     it("changes the current player to player 2", function() {
@@ -34,23 +34,23 @@ describe("TicTacToeBoard", function() {
     });
     
     it("can not be changed", function(){
-      expect(board.at(0, 0).mark()).toEqual(false);
-      expect(board.at(0, 0).isPlayer1()).toEqual(true);
+      expect(board.mark(0, 0)).toEqual(false);
+      expect(board.at(0, 0).isPlayer1).toEqual(true);
     });
   });
   
   describe("the second mark", function() {
     beforeEach(function() {
-      board.at(0, 0).mark();
-      board.at(1, 0).mark();
+      board.mark(0, 0);
+      board.mark(1, 0);
     });
 
     it("occupies a cell", function() {
-      expect(board.at(1, 0).isEmpty()).toEqual(false);
+      expect(board.at(1, 0).isEmpty).toEqual(false);
     });
 
     it("is player 2", function() {
-      expect(board.at(1, 0).isPlayer2()).toEqual(true);
+      expect(board.at(1, 0).isPlayer2).toEqual(true);
     });
     
     it("changes the current player to player 1", function() {
@@ -58,22 +58,22 @@ describe("TicTacToeBoard", function() {
     });
     
     it("can not be changed", function(){
-      expect(board.at(1, 0).mark()).toEqual(false);
-      expect(board.at(1, 0).isPlayer2()).toEqual(true);
+      expect(board.mark(1, 0)).toEqual(false);
+      expect(board.at(1, 0).isPlayer2).toEqual(true);
     });
   });
 
   describe("the game is drawn", function() {
     beforeEach(function() {
-      expect(board.at(0, 0).mark()).toEqual(true);
-      expect(board.at(1, 0).mark()).toEqual(true);
-      expect(board.at(2, 0).mark()).toEqual(true);
-      expect(board.at(0, 1).mark()).toEqual(true);
-      expect(board.at(1, 1).mark()).toEqual(true);
-      expect(board.at(0, 2).mark()).toEqual(true);
-      expect(board.at(2, 1).mark()).toEqual(true);
-      expect(board.at(2, 2).mark()).toEqual(true);
-      expect(board.at(1, 2).mark()).toEqual(true);
+      expect(board.mark(0, 0)).toEqual(true);
+      expect(board.mark(1, 0)).toEqual(true);
+      expect(board.mark(2, 0)).toEqual(true);
+      expect(board.mark(0, 1)).toEqual(true);
+      expect(board.mark(1, 1)).toEqual(true);
+      expect(board.mark(0, 2)).toEqual(true);
+      expect(board.mark(2, 1)).toEqual(true);
+      expect(board.mark(2, 2)).toEqual(true);
+      expect(board.mark(1, 2)).toEqual(true);
     });
     
 
@@ -92,11 +92,11 @@ describe("TicTacToeBoard", function() {
   
   describe("the game has been won", function() {
     beforeEach(function() {
-      expect(board.at(0, 0).mark()).toEqual(true);
-      expect(board.at(0, 1).mark()).toEqual(true);
-      expect(board.at(1, 0).mark()).toEqual(true);
-      expect(board.at(1, 1).mark()).toEqual(true);
-      expect(board.at(2, 0).mark()).toEqual(true);
+      expect(board.mark(0, 0)).toEqual(true);
+      expect(board.mark(0, 1)).toEqual(true);
+      expect(board.mark(1, 0)).toEqual(true);
+      expect(board.mark(1, 1)).toEqual(true);
+      expect(board.mark(2, 0)).toEqual(true);
       expect(board.toString()).toEqual("[XXX|OO |   ]");
     });
     
@@ -109,95 +109,95 @@ describe("TicTacToeBoard", function() {
     });
     
     it("can not mark an empty cell", function(){
-      expect(board.at(2, 2).mark()).toEqual(false);
-      expect(board.at(2, 2).isEmpty()).toEqual(true);
+      expect(board.mark(2, 2)).toEqual(false);
+      expect(board.at(2, 2).isEmpty).toEqual(true);
     });
   });
   
   describe("checking for a winner", function() {
     it("can be by player 2", function() {
-      board.at(0, 0).mark();
-      board.at(1, 0).mark();
-      board.at(2, 0).mark();
-      board.at(1, 1).mark();
-      board.at(2, 1).mark();
-      board.at(1, 2).mark();
+      board.mark(0, 0);
+      board.mark(1, 0);
+      board.mark(2, 0);
+      board.mark(1, 1);
+      board.mark(2, 1);
+      board.mark(1, 2);
       expect(board.getWinner().isPlayer2()).toEqual(true);
     });
     it("can be by player 1", function() {
-      board.at(0, 0).mark();
-      board.at(0, 1).mark();
-      board.at(1, 0).mark();
-      board.at(1, 1).mark();
-      board.at(2, 0).mark();
+      board.mark(0, 0);
+      board.mark(0, 1);
+      board.mark(1, 0);
+      board.mark(1, 1);
+      board.mark(2, 0);
       expect(board.getWinner().isPlayer1()).toEqual(true);
     });
     describe("must be three consecutive marks", function() {
       it("can be the top row", function() {
-        board.at(0, 0).mark();
-        board.at(0, 1).mark();
-        board.at(1, 0).mark();
-        board.at(1, 1).mark();
-        board.at(2, 0).mark();
+        board.mark(0, 0);
+        board.mark(0, 1);
+        board.mark(1, 0);
+        board.mark(1, 1);
+        board.mark(2, 0);
         expect(board.getWinner().isEmpty()).toEqual(false);
       });
       
       it("can be the middle row", function() {
-        board.at(0, 1).mark();
-        board.at(0, 0).mark();
-        board.at(1, 1).mark();
-        board.at(1, 0).mark();
-        board.at(2, 1).mark();
+        board.mark(0, 1);
+        board.mark(0, 0);
+        board.mark(1, 1);
+        board.mark(1, 0);
+        board.mark(2, 1);
         expect(board.getWinner().isEmpty()).toEqual(false);
       });
   
       it("can be the bottom row", function() {
-        board.at(0, 2).mark();
-        board.at(0, 0).mark();
-        board.at(1, 2).mark();
-        board.at(1, 0).mark();
-        board.at(2, 2).mark();
+        board.mark(0, 2);
+        board.mark(0, 0);
+        board.mark(1, 2);
+        board.mark(1, 0);
+        board.mark(2, 2);
         expect(board.getWinner().isEmpty()).toEqual(false);
       });
       
       it("can be the left column", function() {
-        board.at(0, 0).mark();
-        board.at(1, 0).mark();
-        board.at(0, 1).mark();
-        board.at(1, 1).mark();
-        board.at(0, 2).mark();
+        board.mark(0, 0);
+        board.mark(1, 0);
+        board.mark(0, 1);
+        board.mark(1, 1);
+        board.mark(0, 2);
         expect(board.getWinner().isEmpty()).toEqual(false);
       });
       it("can be the right column", function() {
-        board.at(2, 0).mark();
-        board.at(1, 0).mark();
-        board.at(2, 1).mark();
-        board.at(1, 1).mark();
-        board.at(2, 2).mark();
+        board.mark(2, 0);
+        board.mark(1, 0);
+        board.mark(2, 1);
+        board.mark(1, 1);
+        board.mark(2, 2);
         expect(board.getWinner().isEmpty()).toEqual(false);
       });
       it("can be the center column", function() {
-        board.at(1, 0).mark();
-        board.at(2, 0).mark();
-        board.at(1, 1).mark();
-        board.at(2, 1).mark();
-        board.at(1, 2).mark();
+        board.mark(1, 0);
+        board.mark(2, 0);
+        board.mark(1, 1);
+        board.mark(2, 1);
+        board.mark(1, 2);
         expect(board.getWinner().isEmpty()).toEqual(false);
       });
       it("can be the top-right diagonal", function() {
-        board.at(2, 0).mark();
-        board.at(1, 0).mark();
-        board.at(1, 1).mark();
-        board.at(0, 1).mark();
-        board.at(0, 2).mark();
+        board.mark(2, 0);
+        board.mark(1, 0);
+        board.mark(1, 1);
+        board.mark(0, 1);
+        board.mark(0, 2);
         expect(board.getWinner().isEmpty()).toEqual(false);
       });
       it("can be the top-left diagonal", function() {
-        board.at(0, 0).mark();
-        board.at(1, 0).mark();
-        board.at(1, 1).mark();
-        board.at(2, 1).mark();
-        board.at(2, 2).mark();
+        board.mark(0, 0);
+        board.mark(1, 0);
+        board.mark(1, 1);
+        board.mark(2, 1);
+        board.mark(2, 2);
         expect(board.getWinner().isEmpty()).toEqual(false);
       });
     });

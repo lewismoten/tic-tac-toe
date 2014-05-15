@@ -34,13 +34,9 @@ function TicTacToeBoard() {
     }
   }
   
-  this.getPlayer = function() {
-    return player;
-  };
-
-  this.at = function(column, row) {
-    return cell[column][row];
-  };
+  this.mark = function(x, y) { return cell[x][y].mark(); };
+  this.getPlayer = function() { return player; };
+  this.at = function(column, row) { return cell[column][row].data(); };
 
   this.changePlayer = function() {
     player *= -1;
@@ -61,7 +57,7 @@ TicTacToeBoard.prototype.checkForWinner = function() {
 TicTacToeBoard.prototype.isFull = function() {
   for(x = 0; x < 3; x++) {
     for(y = 0; y < 3; y++) {
-      if(this.at(x, y).isEmpty()) return false;
+      if(this.at(x, y).isEmpty) return false;
     }
   }
   return true;
@@ -70,7 +66,7 @@ TicTacToeBoard.prototype.isFull = function() {
 TicTacToeBoard.prototype.isEmpty = function() {
   for(x = 0; x < 3; x++) {
     for(y = 0; y < 3; y++) {
-      if(!this.at(x, y).isEmpty()) return false;
+      if(!this.at(x, y).isEmpty) return false;
     }
   }
   return true;
@@ -78,12 +74,10 @@ TicTacToeBoard.prototype.isEmpty = function() {
 
 TicTacToeBoard.prototype.findWinner = function(x, y, stepX, stepY) {
   var first = this.at(x, y);
-  if(first.isEmpty()) return false;
-  var second = this.at(x + stepX, y + stepY);
-  if(!first.equalTo(second)) return false;
-  var third = this.at(x + (stepX * 2), y + (stepY * 2));
-  if(!first.equalTo(third)) return false;
-  if(first.isPlayer1()) this.getWinner().markAsPlayer1(); else this.getWinner().markAsPlayer2();
+  if(first.isEmpty) return false;
+  if(first != this.at(x + stepX, y + stepY)) return false;
+  if(first != this.at(x + (stepX * 2), y + (stepY * 2))) return false;
+  if(first.isPlayer1) this.getWinner().markAsPlayer1(); else this.getWinner().markAsPlayer2();
   return true;
 };
 
@@ -92,7 +86,7 @@ TicTacToeBoard.prototype.toString = function() {
   for(x = 0; x < 3; x++) {
     if(x !== 0) sb += "|";
     for(y = 0; y < 3; y++) {
-      sb += this.at(y, x).toString();
+      sb += this.at(y, x).text;
     }
   }
   sb += "]";

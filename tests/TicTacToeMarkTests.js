@@ -15,11 +15,26 @@ describe("TicTacToeMark", function() {
   
     it("is not player 2", function() {
       expect(mark.isPlayer2()).toEqual(false);
+      expect(mark.data().isPlayer2).toEqual(false);
     });
   
     it("string value is ' '", function() {
       expect(mark.toString()).toEqual(" ");
     });
+    
+    it("data structure", function() {
+      expect(mark.data()).toEqual({
+        isPlayer1: false,
+        isPlayer2: false,
+        isEmpty: true,
+        text: " "
+      });
+    it("data compare", function() {
+      expect(mark.data()).toEqual(mark.data());
+      var other = new TicTacToeMark();
+      expect(other.data()).toEqual(mark.data());
+    });
+  });
     
     describe("equalTo", function() {
 
@@ -69,6 +84,13 @@ describe("TicTacToeMark", function() {
       expect(mark.markAsPlayer2()).toEqual(false);
       expect(mark.isPlayer2()).toEqual(false);
       expect(mark.isPlayer1()).toEqual(true);
+    });
+    
+    it("data compare", function() {
+      expect(mark.data()).toEqual(mark.data());
+      var other = new TicTacToeMark();
+      other.markAsPlayer1();
+      expect(other.data()).toEqual(mark.data());
     });
     
     describe("equalTo", function() {
