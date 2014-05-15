@@ -16,11 +16,11 @@ function TicTacToeBoard() {
     if(!this.data().isEmpty) return false;
     if(player == board.player1)
     {
-      if(this.markAsPlayer1() === false) throw new Exception("Mark failed");
+      if(this.markAsFirstPlayer() === false) throw new Exception("Mark failed");
     }
     else
     {
-      if(this.markAsPlayer2() === false) throw new Exception("Mark failed");
+      if(this.markAsSecondPlayer() === false) throw new Exception("Mark failed");
     }
     board.checkForWinner();
     board.changePlayer();
@@ -90,8 +90,8 @@ TicTacToeBoard.prototype.isEmpty = function() {
 TicTacToeBoard.prototype.findWinner = function(x, y, stepX, stepY) {
   if(this.isWinningPath(x, y, stepX, stepY)) {
   return this.at(x, y).isFirstPlayer
-    ? this.getWinner().markAsPlayer1()
-    : this.getWinner().markAsPlayer2();
+    ? this.getWinner().markAsFirstPlayer()
+    : this.getWinner().markAsSecondPlayer();
   }
   return false;
 };

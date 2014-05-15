@@ -6,13 +6,13 @@ function TicTacToeMark(onMark) {
   
   this.mark = onMark;
 
-  this.markAsPlayer1 = function() {
+  this.markAsFirstPlayer = function() {
     if(value !== empty) return false;
     value = firstPlayer;
     return true;
   };
   
-  this.markAsPlayer2 = function() {
+  this.markAsSecondPlayer = function() {
     if(value != empty) return false;
     value = secondPlayer;
     return true;
