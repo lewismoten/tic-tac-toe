@@ -1,6 +1,6 @@
 function TicTacToeMark(onMark) {
-  var player1 = "X";
-  var player2 = "O";
+  var firstPlayer = "X";
+  var secondPlayer = "O";
   var empty = " ";
   var value = " ";
   
@@ -8,20 +8,20 @@ function TicTacToeMark(onMark) {
 
   this.markAsPlayer1 = function() {
     if(value !== empty) return false;
-    value = player1;
+    value = firstPlayer;
     return true;
   };
   
   this.markAsPlayer2 = function() {
     if(value != empty) return false;
-    value = player2;
+    value = secondPlayer;
     return true;
   };
   
   this.data = function() {
     return {
-      isFirstPlayer: value == player1,
-      isSecondPlayer: value == player2,
+      isFirstPlayer: value == firstPlayer,
+      isSecondPlayer: value == secondPlayer,
       isEmpty: value == empty,
       text: value
       };
