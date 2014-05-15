@@ -26,9 +26,9 @@ function TicTacToeBoard() {
     return true;
   };
   
-  for(x = 0; x < cell.length; x++) {
+  for(x = 0; x < 3; x++) {
     cell[x] = new Array(3);
-    for(y = 0; y < cell[x].length; y++) {
+    for(y = 0; y < 3; y++) {
       cell[x][y] = new TicTacToeMark(onMarkCell);
     }
   }
