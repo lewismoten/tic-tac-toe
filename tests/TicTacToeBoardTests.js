@@ -5,7 +5,7 @@ describe("TicTacToeBoard", function() {
   });
   
   it("starts with player 1", function() {
-    expect(board.player).toEqual(board.player1);
+    expect(board.getPlayer()).toEqual(board.player1);
   });
   
   it("starts without a winner", function() {
@@ -26,7 +26,7 @@ describe("TicTacToeBoard", function() {
     });
     
     it("changes the player", function() {
-      expect(board.player).toEqual(board.player2);
+      expect(board.getPlayer()).toEqual(board.player2);
     });
     
     it("can not be changed", function(){
@@ -49,7 +49,7 @@ describe("TicTacToeBoard", function() {
     });
     
     it("is no ones turn", function() {
-      expect(board.player).toEqual(board.empty);
+      expect(board.getPlayer()).toEqual(board.empty);
     });
 
     it("does not have a winner", function() {
@@ -67,7 +67,7 @@ describe("TicTacToeBoard", function() {
     });
     
     it("is no ones turn", function() {
-      expect(board.player).toEqual(board.empty);
+      expect(board.getPlayer()).toEqual(board.empty);
     });
     
     it("has a winner", function() {
