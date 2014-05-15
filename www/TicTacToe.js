@@ -1,13 +1,7 @@
 function TicTacToe() {
-  this.hasWinner = false;
-  this.hasEnded = false;
-  this.marks = new TicTacToeMarks();
-  this.board = new TicTacToeBoard(this.marks.empty);
+  this.board = new TicTacToeBoard();
 }
 
 TicTacToe.prototype.new = function() {
-  this.hasWinner = false;
-  this.isNewGame = true;
-  this.hasEnded = false;
-  this.board = new TicTacToeBoard(this.marks.empty);
+  this.board = new TicTacToeBoard();
 };

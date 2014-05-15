@@ -1,20 +1,86 @@
-describe("TicTacToeMarks", function() {
-  var marks;
-  
+describe("TicTacToeMark", function() {
+  var mark;
   beforeEach(function() {
-    marks = new TicTacToeMarks();
-  });
-  
-  it("has ' ' for empty cell", function() {
-    expect(marks.empty).toEqual(' ');
-  });
-  
-  it("has 'X' for player 1", function() {
-    expect(marks.playerOne).toEqual('X');
-  });
-  
-  it("has 'O' for player 2", function() {
-    expect(marks.playerTwo).toEqual('O');
+    mark = new TicTacToeMark();
   });
 
+  it("is empty", function() {
+    expect(mark.isEmpty()).toEqual(true);
+  });
+
+  it("is not player 1", function() {
+    expect(mark.isPlayer1()).toEqual(false);
+  });
+
+  it("is not player 2", function() {
+    expect(mark.isPlayer2()).toEqual(false);
+  });
+
+  it("string value is ' '", function() {
+    expect(mark.toString()).toEqual(" ");
+  });
+
+  describe("marked as player 1", function() {
+    beforeEach(function() {
+     expect(mark.markAsPlayer1()).toEqual(true);
+    });
+
+    it("is not empty", function() {
+      expect(mark.isEmpty()).toEqual(false);
+    });
+
+    it("is player 1", function() {
+      expect(mark.isPlayer1()).toEqual(true);
+    });
+
+    it("is not player 2", function() {
+      expect(mark.isPlayer2()).toEqual(false);
+    });
+
+    it("string value is 'X'", function() {
+      expect(mark.toString()).toEqual("X");
+    });
+    
+    it("can not be marked again", function() {
+      expect(mark.markAsPlayer1()).toEqual(false);
+    });
+    
+    it("can not be changed", function() {
+      expect(mark.markAsPlayer2()).toEqual(false);
+      expect(mark.isPlayer2()).toEqual(false);
+      expect(mark.isPlayer1()).toEqual(true);
+    });
+  });
+
+  describe("marked as player 2", function() {
+    beforeEach(function() {
+      expect(mark.markAsPlayer2()).toEqual(true);
+    });
+
+    it("is not empty", function() {
+      expect(mark.isEmpty()).toEqual(false);
+    });
+
+    it("is not player 1", function() {
+      expect(mark.isPlayer1()).toEqual(false);
+    });
+
+    it("is player 2", function() {
+      expect(mark.isPlayer2()).toEqual(true);
+    });
+
+    it("string value is 'O'", function() {
+      expect(mark.toString()).toEqual("O");
+    });
+    
+    it("can not be marked again", function() {
+      expect(mark.markAsPlayer2()).toEqual(false);
+    });
+    
+    it("can not be changed", function() {
+      expect(mark.markAsPlayer1()).toEqual(false);
+      expect(mark.isPlayer1()).toEqual(false);
+      expect(mark.isPlayer2()).toEqual(true);
+    });
+  });
 });
