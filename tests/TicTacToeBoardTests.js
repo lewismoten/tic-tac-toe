@@ -141,10 +141,14 @@ describe("TicTacToeBoard", function() {
         expect(board.isFull()).toEqual(true);
       });
   
-      it("does not have a winner", function() {
-        expect(board.getWinner().data().isEmpty).toEqual(true);
+      it("first player is not a winner", function() {
+        expect(board.getWinner().isFirst).toEqual(false);
       });
   
+      it("second player is not a winner", function() {
+        expect(board.getWinner().isSecond).toEqual(false);
+      });
+
       it("is no ones turn", function() {
         expect(board.getPlayer().isFirst).toEqual(false);
         expect(board.getPlayer().isSecond).toEqual(false);
@@ -177,15 +181,13 @@ describe("TicTacToeBoard", function() {
 
       describe("winner", function(){
         it("can be first player", function() {
-          var winner = board.getWinner();
-          var data = winner.data();
-          expect(data.isFirstPlayer).toEqual(true);
+          expect(board.getWinner().isFirst).toEqual(true);
         });
         
         it("can be second player", function() {
           var board2 = new TicTacToeBoard();
           board2.importPlay(123568);
-          expect(board2.getWinner().data().isSecondPlayer).toEqual(true);
+          expect(board2.getWinner().isSecond).toEqual(true);
         });
       });
 
@@ -263,6 +265,7 @@ TicTacToeBoard.prototype.importPlay = function(marks) {
       case "9": x = 2; y = 2; break;
     }
     if(x == -1 || y == -1) throw new Error("can not find cell for " + marks[i]);
-    this.mark(x, y);
+    var marked = this.mark(x, y);
+    if(!marked) throw new Error("Could not mark cell for " + marks[i]);
   }
 };

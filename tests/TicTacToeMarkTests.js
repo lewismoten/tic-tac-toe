@@ -1,7 +1,24 @@
 describe("TicTacToeMark", function() {
   var mark;
+  var emptyMark;
+  var firstPlayerMark;
+  var secondPlayerMark;
+  var getPlayerIsFirst = true;
+  var getPlayerIsSecond = false;
+  var onMarked = function() {onMarkedCount++;};
+  var onMarkedCount = 0;
+  var onGetPlayer = function(){return {isFirst: getPlayerIsFirst, isSecond: getPlayerIsSecond};};
   beforeEach(function() {
-    mark = new TicTacToeMark();
+    onMarkedCount = 0;
+    firstPlayerMark = new TicTacToeMark(function(){return {isFirst: true, isSecond: false};}, null);
+    secondPlayerMark = new TicTacToeMark(function(){return {isFirst: false, isSecond: true};}, null);
+    emptyMark = new TicTacToeMark(null, null);
+    firstPlayerMark.mark();
+    secondPlayerMark.mark();
+    
+    mark = new TicTacToeMark(onGetPlayer, onMarked);
+    getPlayerIsFirst = true;
+    getPlayerIsSecond = false;
   });
 
   it("is empty", function() {
@@ -33,75 +50,74 @@ describe("TicTacToeMark", function() {
     describe("equalTo", function() {
 
       it("is empty", function() {
-        var other = new TicTacToeMark();
-        expect(mark.equalTo(other)).toEqual(true);
+        expect(mark.equalTo(emptyMark)).toEqual(true);
       });
       it("is not player 1", function() {
-        var other = new TicTacToeMark();
-        other.markAsFirstPlayer();
-        expect(mark.equalTo(other)).toEqual(false);
+        expect(mark.equalTo(firstPlayerMark)).toEqual(false);
       });
-      it("is not player 2", function() {
-        var other = new TicTacToeMark();
-        other.markAsSecondPlayer();
-        expect(mark.equalTo(other)).toEqual(false);
+      it("is not second player", function() {
+        expect(mark.equalTo(secondPlayerMark)).toEqual(false);
       });
     });
   });
 
   describe("marked as first player", function() {
+    var data;
     beforeEach(function() {
-     expect(mark.markAsFirstPlayer()).toEqual(true);
+      getPlayerIsFirst = true;
+      getPlayerIsSecond = false;
+      expect(mark.mark()).toEqual(true);
+      data = mark.data();
     });
 
+    it("calls onMarked()", function() {
+      expect(onMarkedCount).toEqual(1);
+    });
+    
     it("is not empty", function() {
-      expect(mark.data().isEmpty).toEqual(false);
+      expect(data.isEmpty).toEqual(false);
     });
 
     it("is first player", function() {
-      expect(mark.data().isFirstPlayer).toEqual(true);
+      expect(data.isFirstPlayer).toEqual(true);
     });
 
     it("is not second player", function() {
-      expect(mark.data().isSecondPlayer).toEqual(false);
+      expect(data.isSecondPlayer).toEqual(false);
     });
 
     it("has text as \"X\"", function() {
-      expect(mark.data().text).toEqual("X");
+      expect(data.text).toEqual("X");
     });
     
     it("can not be marked again", function() {
-      expect(mark.markAsFirstPlayer()).toEqual(false);
+      expect(mark.mark()).toEqual(false);
     });
     
+    it("does not call onMarked() again", function() {
+      onMarkedCount = 0;
+      mark.mark();
+      expect(onMarkedCount).toEqual(0);
+    });
+
     it("can not be changed", function() {
-      expect(mark.markAsSecondPlayer()).toEqual(false);
+      getPlayerIsFirst = false;
+      getPlayerIsSecond = true;
+      expect(mark.mark()).toEqual(false);
       expect(mark.data().isFirstPlayer).toEqual(true);
       expect(mark.data().isSecondPlayer).toEqual(false);
     });
-    
-    it("data compare", function() {
-      expect(mark.data()).toEqual(mark.data());
-      var other = new TicTacToeMark();
-      other.markAsFirstPlayer();
-      expect(other.data()).toEqual(mark.data());
-    });
-    
+
     describe("equalTo", function() {
 
       it("is not empty", function() {
-        var other = new TicTacToeMark();
-        expect(mark.equalTo(other)).toEqual(false);
+        expect(mark.equalTo(emptyMark)).toEqual(false);
       });
       it("is first player", function() {
-        var other = new TicTacToeMark();
-        other.markAsFirstPlayer();
-        expect(mark.equalTo(other)).toEqual(true);
+        expect(mark.equalTo(firstPlayerMark)).toEqual(true);
       });
       it("is not second player", function() {
-        var other = new TicTacToeMark();
-        other.markAsSecondPlayer();
-        expect(mark.equalTo(other)).toEqual(false);
+        expect(mark.equalTo(secondPlayerMark)).toEqual(false);
       });
     });
   });
@@ -109,7 +125,9 @@ describe("TicTacToeMark", function() {
   describe("marked as second player", function() {
     var data;
     beforeEach(function() {
-      expect(mark.markAsSecondPlayer()).toEqual(true);
+      getPlayerIsFirst = false;
+      getPlayerIsSecond = true;
+      expect(mark.mark()).toEqual(true);
       data = mark.data();
     });
 
@@ -126,7 +144,7 @@ describe("TicTacToeMark", function() {
     });
 
     it("can not be marked again", function() {
-      expect(mark.markAsSecondPlayer()).toEqual(false);
+      expect(mark.mark()).toEqual(false);
     });
     
     it("has text as \"O\"", function() {
@@ -134,7 +152,9 @@ describe("TicTacToeMark", function() {
     });
 
     it("can not be changed", function() {
-      expect(mark.markAsFirstPlayer()).toEqual(false);
+      getPlayerIsFirst = true;
+      getPlayerIsSecond = false;
+      expect(mark.mark()).toEqual(false);
       expect(mark.data().isFirstPlayer).toEqual(false);
       expect(mark.data().isSecondPlayer).toEqual(true);
     });
@@ -142,18 +162,13 @@ describe("TicTacToeMark", function() {
     describe("equalTo", function() {
 
       it("is not empty", function() {
-        var other = new TicTacToeMark();
-        expect(mark.equalTo(other)).toEqual(false);
+        expect(mark.equalTo(emptyMark)).toEqual(false);
       });
       it("is not first player", function() {
-        var other = new TicTacToeMark();
-        other.markAsFirstPlayer();
-        expect(mark.equalTo(other)).toEqual(false);
+        expect(mark.equalTo(firstPlayerMark)).toEqual(false);
       });
       it("is second player", function() {
-        var other = new TicTacToeMark();
-        other.markAsSecondPlayer();
-        expect(mark.equalTo(other)).toEqual(true);
+        expect(mark.equalTo(secondPlayerMark)).toEqual(true);
       });
     });
   });

@@ -1,19 +1,25 @@
-function TicTacToeMark() {
+function TicTacToeMark(onGetPlayer, onMarked) {
   var firstPlayer = "X";
   var secondPlayer = "O";
   var empty = " ";
   var value = " ";
   
-  this.markAsFirstPlayer = function() {
+  this.mark = function() {
     if(value !== empty) return false;
-    value = firstPlayer;
+    if(onGetPlayer){
+
+    var player = onGetPlayer();
+    if(player.isFirst) {
+      value = firstPlayer;
+    } else if(player.isSecond) {
+      value = secondPlayer;
+    } else {
+      return false;
+    }
+    if(onMarked) onMarked();
     return true;
-  };
-  
-  this.markAsSecondPlayer = function() {
-    if(value != empty) return false;
-    value = secondPlayer;
-    return true;
+    }
+    throw new Error("Can not mark without knowing the player.")
   };
   
   this.data = function() {

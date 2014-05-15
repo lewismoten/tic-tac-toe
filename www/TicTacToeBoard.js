@@ -3,40 +3,40 @@ function TicTacToeBoard() {
   var player = 1;
   var cell = new Array(3);
   var board = this;
-  var winner = new TicTacToeMark();
+  var winner = 0;
 
-  this.getWinner = function() { return winner; };
+  // TODO: rename
+  var po = function(order) {
+    return {
+      isFirst: order === 1,
+      isSecond: order === -1
+    };
+   };
+  
+  this.getPlayer = function() { return po(player); };
+  
+  this.isMatch = function(pointA, pointB) {
+    return cell[pointA.x][pointA.y].equalTo(cell[pointB.x][pointB.y]);
+  };
+
+  var onMarked = function() {
+    board.checkForWinner();
+    board.changePlayer();
+  };
+
+  this.getWinner = function() { return po(winner); };
   
   for(x = 0; x < 3; x++) {
     cell[x] = new Array(3);
     for(y = 0; y < 3; y++) {
-      cell[x][y] = new TicTacToeMark();
+      cell[x][y] = new TicTacToeMark(this.getPlayer, onMarked);
     }
   }
   
   this.mark = function(x, y) {
-    var that = cell[x][y];
-    if(this.isGameOver()) return false;
-    if(!that.data().isEmpty) return false;
-    if(this.getPlayer().isFirst)
-    {
-      if(that.markAsFirstPlayer() === false) throw new Exception("Mark failed");
-    }
-    else
-    {
-      if(that.markAsSecondPlayer() === false) throw new Exception("Mark failed");
-    }
-    this.checkForWinner();
-    this.changePlayer();
-    return true;
+    return cell[x][y].mark();
   };
   
-  this.getPlayer = function() {
-    return {
-      isFirst: player === 1,
-      isSecond: player === -1
-    };
-  };
   this.at = function(column, row) { return cell[column][row].data(); };
 
   this.changePlayer = function() {
@@ -46,19 +46,23 @@ function TicTacToeBoard() {
       player *= -1;
     }
   };
-  this.isMatch = function(pointA, pointB) {
-    return cell[pointA.x][pointA.y].equalTo(cell[pointB.x][pointB.y]);
+  
+  this.findWinner = function(x, y, stepX, stepY) {
+    if(this.isWinningPath(x, y, stepX, stepY)) {
+      winner = this.at(x, y).isFirstPlayer ? 1 : -1;
+      return true;
+    }
+    return false;
   };
+  
 }
 
 TicTacToeBoard.prototype.isGameOver = function() {
-  if(this.isFull()) return true;
-  if(this.getPlayer() == this.empty) return true;
-  return this.hasWinner();
+  return this.hasWinner() || this.isFull();
 };
 
 TicTacToeBoard.prototype.hasWinner = function() {
-  return !this.getWinner().data().isEmpty;
+  return this.getWinner().isFirst || this.getWinner().isSecond;
 };
 
 TicTacToeBoard.prototype.checkForWinner = function() {
@@ -88,14 +92,6 @@ TicTacToeBoard.prototype.isEmpty = function() {
   return true;
 };
 
-TicTacToeBoard.prototype.findWinner = function(x, y, stepX, stepY) {
-  if(this.isWinningPath(x, y, stepX, stepY)) {
-  return this.at(x, y).isFirstPlayer
-    ? this.getWinner().markAsFirstPlayer()
-    : this.getWinner().markAsSecondPlayer();
-  }
-  return false;
-};
 
 TicTacToeBoard.prototype.isWinningPath = function(x, y, stepX, stepY) {
   if(this.at(x, y).isEmpty) return false;
