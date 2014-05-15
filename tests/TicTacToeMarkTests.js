@@ -17,16 +17,12 @@ describe("TicTacToeMark", function() {
       expect(mark.isPlayer2()).toEqual(false);
     });
   
-    it("string value is ' '", function() {
-      expect(mark.toString()).toEqual(" ");
-    });
-    
     it("serializes itself", function() {
       expect(mark.data()).toEqual({
         isFirstPlayer: mark.isPlayer1(),
         isSecondPlayer: mark.isPlayer2(),
         isEmpty: mark.isEmpty(),
-        text: mark.toString()
+        text: " "
       });
     });
     
@@ -66,16 +62,12 @@ describe("TicTacToeMark", function() {
       expect(mark.isPlayer2()).toEqual(false);
     });
 
-    it("string value is 'X'", function() {
-      expect(mark.toString()).toEqual("X");
-    });
-    
     it("serializes itself", function() {
       expect(mark.data()).toEqual({
         isFirstPlayer: mark.isPlayer1(),
         isSecondPlayer: mark.isPlayer2(),
         isEmpty: mark.isEmpty(),
-        text: mark.toString()
+        text: "X"
       });
     });
     
@@ -132,10 +124,6 @@ describe("TicTacToeMark", function() {
       expect(mark.isPlayer2()).toEqual(true);
     });
 
-    it("string value is 'O'", function() {
-      expect(mark.toString()).toEqual("O");
-    });
-    
     it("can not be marked again", function() {
       expect(mark.markAsPlayer2()).toEqual(false);
     });
@@ -151,7 +139,7 @@ describe("TicTacToeMark", function() {
         isFirstPlayer: mark.isPlayer1(),
         isSecondPlayer: mark.isPlayer2(),
         isEmpty: mark.isEmpty(),
-        text: mark.toString()
+        text: "O"
       });
     });
 

@@ -31,24 +31,18 @@ function TicTacToeMark(onMark) {
   };
   
   this.data = function() {
+    var s = this.isEmpty() ? ' ' : this.isPlayer1() ? 'X' : this.isPlayer2() ? 'O' : '?';
     return {
       isFirstPlayer: this.isPlayer1(),
       isSecondPlayer: this.isPlayer2(),
       isEmpty: this.isEmpty(),
-      text: this.toString()
+      text: s
       };
   };
+  
 }
 
-TicTacToeMark.prototype.toString = function() {
-  if(this.isEmpty()) return ' ';
-  if(this.isPlayer1()) return 'X';
-  if(this.isPlayer2()) return 'O';
-  return '?';
+TicTacToeMark.prototype.equalTo = function(that) {
+  return this.data().text == that.data().text;
 };
 
-TicTacToeMark.prototype.equalTo = function(mark) {
-  return this.isEmpty() == mark.isEmpty()
-  && this.isPlayer1() == mark.isPlayer1()
-  && this.isPlayer2() == mark.isPlayer2();
-};
