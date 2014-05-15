@@ -39,11 +39,26 @@ function TicTacToeBoard() {
   this.at = function(column, row) { return cell[column][row].data(); };
 
   this.changePlayer = function() {
-    player *= -1;
-    if(this.isFull()) player = this.empty;
-    if(!this.getWinner().isEmpty()) player = this.empty;
+    if(this.isGameOver()) {
+      player = this.empty;
+    } else {
+      player *= -1;
+    }
+  };
+  this.isMatch = function(pointA, pointB) {
+    return cell[pointA.x][pointA.y].equalTo(cell[pointB.x][pointB.y]);
   };
 }
+
+TicTacToeBoard.prototype.isGameOver = function() {
+  if(this.isFull()) return true;
+  if(this.getPlayer() == this.empty) return true;
+  return this.hasWinner();
+};
+
+TicTacToeBoard.prototype.hasWinner = function() {
+  return !this.getWinner().isEmpty();
+};
 
 TicTacToeBoard.prototype.checkForWinner = function() {
   for(i = 0; i < 3; i++) {
@@ -73,12 +88,20 @@ TicTacToeBoard.prototype.isEmpty = function() {
 };
 
 TicTacToeBoard.prototype.findWinner = function(x, y, stepX, stepY) {
-  var first = this.at(x, y);
-  if(first.isEmpty) return false;
-  if(first != this.at(x + stepX, y + stepY)) return false;
-  if(first != this.at(x + (stepX * 2), y + (stepY * 2))) return false;
-  if(first.isPlayer1) this.getWinner().markAsPlayer1(); else this.getWinner().markAsPlayer2();
-  return true;
+  if(this.isWinningPath(x, y, stepX, stepY)) {
+  return this.at(x, y).isFirstPlayer
+    ? this.getWinner().markAsPlayer1()
+    : this.getWinner().markAsPlayer2();
+  }
+  return false;
+};
+
+TicTacToeBoard.prototype.isWinningPath = function(x, y, stepX, stepY) {
+  if(this.at(x, y).isEmpty) return false;
+  var first = {x: x, y: y};
+  var second = {x: first.x + stepX, y: first.y + stepY};
+  var third = {x: second.x + stepX, y: second.y + stepY};
+  return this.isMatch(first, second) && this.isMatch(first, third);
 };
 
 TicTacToeBoard.prototype.toString = function() {

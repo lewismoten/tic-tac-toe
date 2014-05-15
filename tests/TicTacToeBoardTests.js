@@ -18,15 +18,15 @@ describe("TicTacToeBoard", function() {
 
   describe("the first mark", function() {
     beforeEach(function() {
-      board.mark(0, 0);
+      board.importPlay(1);
     });
     
     it("occupies a cell", function() {
       expect(board.at(0, 0).isEmpty).toEqual(false);
     });
     
-    it("is player 1", function() {
-      expect(board.at(0, 0).isPlayer1).toEqual(true);
+    it("is the first player", function() {
+      expect(board.at(0, 0).isFirstPlayer).toEqual(true);
     });
     
     it("changes the current player to player 2", function() {
@@ -35,18 +35,21 @@ describe("TicTacToeBoard", function() {
     
     it("can not be changed", function(){
       expect(board.mark(0, 0)).toEqual(false);
-      expect(board.at(0, 0).isPlayer1).toEqual(true);
+      expect(board.at(0, 0).isFirstPlayer).toEqual(true);
     });
   });
   
   describe("the second mark", function() {
     beforeEach(function() {
-      board.mark(0, 0);
-      board.mark(1, 0);
+      board.importPlay(12);
     });
 
     it("occupies a cell", function() {
       expect(board.at(1, 0).isEmpty).toEqual(false);
+    });
+    
+    it("does not match the previous mark", function() {
+      expect(board.isMatch({x:0,y:0}, {x:1,y:0})).toEqual(false);
     });
 
     it("is player 2", function() {
@@ -63,19 +66,24 @@ describe("TicTacToeBoard", function() {
     });
   });
 
-  describe("the game is drawn", function() {
+  describe("the third mark", function() {
     beforeEach(function() {
-      expect(board.mark(0, 0)).toEqual(true);
-      expect(board.mark(1, 0)).toEqual(true);
-      expect(board.mark(2, 0)).toEqual(true);
-      expect(board.mark(0, 1)).toEqual(true);
-      expect(board.mark(1, 1)).toEqual(true);
-      expect(board.mark(0, 2)).toEqual(true);
-      expect(board.mark(2, 1)).toEqual(true);
-      expect(board.mark(2, 2)).toEqual(true);
-      expect(board.mark(1, 2)).toEqual(true);
+      board.importPlay(123);
+    });
+
+    it("matches the first mark", function() {
+      expect(board.isMatch({x:0,y:0}, {x:2,y:0})).toEqual(true);
     });
     
+    it("is the first player", function() {
+      expect(board.at(2, 0).isFirstPlayer).toEqual(true);
+    });
+  });
+
+  describe("the game is drawn", function() {
+    beforeEach(function() {
+      board.importPlay(123457698);
+    });
 
     it("has no empty cells", function() {
       expect(board.isFull()).toEqual(true);
@@ -89,15 +97,22 @@ describe("TicTacToeBoard", function() {
       expect(board.getPlayer()).toEqual(board.empty);
     });
   });
-  
+  var mark = function(x, y, player1) {
+    expect(board.getPlayer()).toEqual(player1 ? board.player1 : board.player2);
+    expect(board.mark(x, y)).toEqual(true);
+  };
   describe("the game has been won", function() {
     beforeEach(function() {
-      expect(board.mark(0, 0)).toEqual(true);
-      expect(board.mark(0, 1)).toEqual(true);
-      expect(board.mark(1, 0)).toEqual(true);
-      expect(board.mark(1, 1)).toEqual(true);
-      expect(board.mark(2, 0)).toEqual(true);
+      board.importPlay(14253);
       expect(board.toString()).toEqual("[XXX|OO |   ]");
+    });
+    
+    it("has a winning path", function() {
+      expect(board.isWinningPath(0, 0, 1, 0)).toEqual(true);
+    });
+    
+    it("is end of game", function() {
+      expect(board.isGameOver()).toEqual(true);
     });
     
     it("is no ones turn", function() {
@@ -105,7 +120,7 @@ describe("TicTacToeBoard", function() {
     });
     
     it("has a winner", function() {
-      expect(board.getWinner().isEmpty()).toEqual(false);
+      expect(board.hasWinner()).toEqual(true);
     });
     
     it("can not mark an empty cell", function(){
@@ -114,92 +129,79 @@ describe("TicTacToeBoard", function() {
     });
   });
   
-  describe("checking for a winner", function() {
-    it("can be by player 2", function() {
-      board.mark(0, 0);
-      board.mark(1, 0);
-      board.mark(2, 0);
-      board.mark(1, 1);
-      board.mark(2, 1);
-      board.mark(1, 2);
+  
+  describe("winning player", function() {
+    
+    it("can be player 2", function() {
+      board.importPlay(123568);
       expect(board.getWinner().isPlayer2()).toEqual(true);
     });
-    it("can be by player 1", function() {
-      board.mark(0, 0);
-      board.mark(0, 1);
-      board.mark(1, 0);
-      board.mark(1, 1);
-      board.mark(2, 0);
+    
+    it("can be the first player", function() {
+      board.importPlay(14253);
       expect(board.getWinner().isPlayer1()).toEqual(true);
     });
-    describe("must be three consecutive marks", function() {
-      it("can be the top row", function() {
-        board.mark(0, 0);
-        board.mark(0, 1);
-        board.mark(1, 0);
-        board.mark(1, 1);
-        board.mark(2, 0);
-        expect(board.getWinner().isEmpty()).toEqual(false);
-      });
-      
-      it("can be the middle row", function() {
-        board.mark(0, 1);
-        board.mark(0, 0);
-        board.mark(1, 1);
-        board.mark(1, 0);
-        board.mark(2, 1);
-        expect(board.getWinner().isEmpty()).toEqual(false);
-      });
-  
-      it("can be the bottom row", function() {
-        board.mark(0, 2);
-        board.mark(0, 0);
-        board.mark(1, 2);
-        board.mark(1, 0);
-        board.mark(2, 2);
-        expect(board.getWinner().isEmpty()).toEqual(false);
-      });
-      
-      it("can be the left column", function() {
-        board.mark(0, 0);
-        board.mark(1, 0);
-        board.mark(0, 1);
-        board.mark(1, 1);
-        board.mark(0, 2);
-        expect(board.getWinner().isEmpty()).toEqual(false);
-      });
-      it("can be the right column", function() {
-        board.mark(2, 0);
-        board.mark(1, 0);
-        board.mark(2, 1);
-        board.mark(1, 1);
-        board.mark(2, 2);
-        expect(board.getWinner().isEmpty()).toEqual(false);
-      });
-      it("can be the center column", function() {
-        board.mark(1, 0);
-        board.mark(2, 0);
-        board.mark(1, 1);
-        board.mark(2, 1);
-        board.mark(1, 2);
-        expect(board.getWinner().isEmpty()).toEqual(false);
-      });
-      it("can be the top-right diagonal", function() {
-        board.mark(2, 0);
-        board.mark(1, 0);
-        board.mark(1, 1);
-        board.mark(0, 1);
-        board.mark(0, 2);
-        expect(board.getWinner().isEmpty()).toEqual(false);
-      });
-      it("can be the top-left diagonal", function() {
-        board.mark(0, 0);
-        board.mark(1, 0);
-        board.mark(1, 1);
-        board.mark(2, 1);
-        board.mark(2, 2);
-        expect(board.getWinner().isEmpty()).toEqual(false);
-      });
+  });
+    
+  describe("winning path", function() {
+
+    afterEach(function() {
+      expect(board.hasWinner()).toEqual(true);
+    });
+    
+    it("can be the top row", function() {
+      board.importPlay(14253);
+    });
+    
+    it("can be the middle row", function() {
+      board.importPlay(41526);
+    });
+
+    it("can be the bottom row", function() {
+      board.importPlay(71829);
+    });
+    
+    it("can be the left column", function() {
+      board.importPlay(12457);
+    });
+
+    it("can be the right column", function() {
+      board.importPlay(32659);
+    });
+
+    it("can be the center column", function() {
+      board.importPlay(23568);
+    });
+
+    it("can be the top-right diagonal", function() {
+      board.importPlay(32547);
+    });
+
+    it("can be the top-left diagonal", function() {
+      board.importPlay(12569);
     });
   });
 });
+
+TicTacToeBoard.prototype.importPlay = function(marks) {
+  marks += "";
+  for(var i = 0; i < marks.length; i++)
+  {
+    var x = -1;
+    var y = -1;
+    switch(marks[i])
+    {
+      case "1": x = 0; y = 0; break;
+      case "2": x = 1; y = 0; break;
+      case "3": x = 2; y = 0; break;
+      case "4": x = 0; y = 1; break;
+      case "5": x = 1; y = 1; break;
+      case "6": x = 2; y = 1; break;
+      case "7": x = 0; y = 2; break;
+      case "8": x = 1; y = 2; break;
+      case "9": x = 2; y = 2; break;
+    }
+    if(x == -1 || y == -1) throw new Error("can not find cell for " + marks[i]);
+    this.mark(x, y);
+  }
+};

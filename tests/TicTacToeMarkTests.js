@@ -24,7 +24,7 @@ describe("TicTacToeMark", function() {
     
     it("data structure", function() {
       expect(mark.data()).toEqual({
-        isPlayer1: false,
+        isFirstPlayer: false,
         isPlayer2: false,
         isEmpty: true,
         text: " "
