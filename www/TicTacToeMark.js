@@ -6,36 +6,26 @@ function TicTacToeMark(onMark) {
   
   this.mark = onMark;
 
-  this.isEmpty = function() {
-    return value === empty;
-  };
-  
-  this.isPlayer1 = function() {
-    return value === player1;
-  };
-  
-  this.isPlayer2 = function() {
-    return value === player2;
-  };
-  
   this.markAsPlayer1 = function() {
-    if(!this.isEmpty()) return false;
+    if(value !== empty) return false;
     value = player1;
     return true;
   };
   
   this.markAsPlayer2 = function() {
-    if(!this.isEmpty()) return false;
+    if(value != empty) return false;
     value = player2;
     return true;
   };
   
   this.data = function() {
-    var s = this.isEmpty() ? ' ' : this.isPlayer1() ? 'X' : this.isPlayer2() ? 'O' : '?';
+    var s = value == empty ? ' ' :
+      value == player1 ? 'X' :
+      value == player2 ? 'O' : '?';
     return {
-      isFirstPlayer: this.isPlayer1(),
-      isSecondPlayer: this.isPlayer2(),
-      isEmpty: this.isEmpty(),
+      isFirstPlayer: value == player1,
+      isSecondPlayer: value == player2,
+      isEmpty: value == empty,
       text: s
       };
   };

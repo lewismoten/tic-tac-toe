@@ -12,15 +12,15 @@ function TicTacToeBoard() {
   this.getWinner = function() { return winner; };
   
   var onMarkCell = function() {
-    if(board.getPlayer() == board.empty) return false;
-    if(!this.isEmpty()) return false;
+    if(board.isGameOver()) return false;
+    if(!this.data().isEmpty) return false;
     if(player == board.player1)
     {
-      this.markAsPlayer1();
+      if(this.markAsPlayer1() === false) throw new Exception("Mark failed");
     }
     else
     {
-      this.markAsPlayer2();
+      if(this.markAsPlayer2() === false) throw new Exception("Mark failed");
     }
     board.checkForWinner();
     board.changePlayer();
@@ -57,7 +57,7 @@ TicTacToeBoard.prototype.isGameOver = function() {
 };
 
 TicTacToeBoard.prototype.hasWinner = function() {
-  return !this.getWinner().isEmpty();
+  return !this.getWinner().data().isEmpty;
 };
 
 TicTacToeBoard.prototype.checkForWinner = function() {
