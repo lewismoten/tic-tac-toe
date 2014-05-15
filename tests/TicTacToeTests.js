@@ -5,10 +5,6 @@ describe("TicTacToe", function() {
     ticTacToe = new TicTacToe();
   });
 
-  it("has marks", function() {
-    expect(ticTacToe.marks).not.toBeNull();
-  });
-
   it("may start a new game", function() {
     ticTacToe.new();
   });
@@ -28,7 +24,7 @@ describe("TicTacToe", function() {
     
     describe("marked", function(){
       beforeEach(function() {
-        ticTacToe.board.mark(0, 0);
+        ticTacToe.board.at(0, 0).mark();
       });
       
       it("does not have an empty board", function() {
