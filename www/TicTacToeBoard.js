@@ -36,15 +36,6 @@ function TicTacToeBoard() {
   this.getPlayer = function() {
     return player;
   };
-  
-  this.isEmpty = function() {
-    for(x = 0; x < cell.length; x++) {
-      for(y = 0; y < cell[x].length; y++) {
-        if(!cell[x][y].isEmpty()) return false;
-      }
-    }
-    return true;
-  };
 
   this.at = function(column, row) {
     return cell[column][row];
@@ -70,6 +61,15 @@ TicTacToeBoard.prototype.isFull = function() {
   for(x = 0; x < 3; x++) {
     for(y = 0; y < 3; y++) {
       if(this.at(x, y).isEmpty()) return false;
+    }
+  }
+  return true;
+};
+  
+TicTacToeBoard.prototype.isEmpty = function() {
+  for(x = 0; x < 3; x++) {
+    for(y = 0; y < 3; y++) {
+      if(!this.at(x, y).isEmpty()) return false;
     }
   }
   return true;
