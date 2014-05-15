@@ -1,3 +1,14 @@
+/*
+
+var mark = new TicTacToeMark(onGetPlayer, onMarked);
+mark.mark() - marks the cell if it is not filled based on results from onGetPlayer();
+mark.data() - gets data that represents the cell;
+mark.equalTo(otherMark) - compares two marks to see if they match
+
+onGetPlayer - expected to return {isFirst: [boo], isSecond [boo]} to determine who is marking the cell
+onMarked - calback after the mark has changed for callee to perform actions afterwards
+*/
+
 function TicTacToeMark(onGetPlayer, onMarked) {
   var firstPlayer = "X";
   var secondPlayer = "O";
@@ -33,7 +44,7 @@ function TicTacToeMark(onGetPlayer, onMarked) {
   
 }
 
-TicTacToeMark.prototype.equalTo = function(that) {
-  return this.data().text == that.data().text;
+TicTacToeMark.prototype.equalTo = function(otherMark) {
+  return this.data().text == otherMark.data().text;
 };
 
