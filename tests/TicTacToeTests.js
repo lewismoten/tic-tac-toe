@@ -15,7 +15,7 @@ describe("TicTacToe", function() {
       });
 
     it("has no winner", function() {
-      expect(ticTacToe.board.winner).toEqual(ticTacToe.board.empty);
+      expect(ticTacToe.board.getWinner().isEmpty()).toEqual(true);
     });
     
     it("has empty board", function() {

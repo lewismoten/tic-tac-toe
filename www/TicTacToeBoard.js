@@ -7,8 +7,9 @@ function TicTacToeBoard() {
   this.empty = 0;
   this.player1 = 1;
   this.player2 = -1;
-  
-  this.winner = this.empty;
+  var winner = new TicTacToeMark();
+
+  this.getWinner = function() { return winner; };
   
   var onMarkCell = function() {
     if(board.getPlayer() == board.empty) return false;
@@ -44,7 +45,7 @@ function TicTacToeBoard() {
   this.changePlayer = function() {
     player *= -1;
     if(this.isFull()) player = this.empty;
-    if(this.winner != this.empty) player = this.empty;
+    if(!this.getWinner().isEmpty()) player = this.empty;
   };
 }
 
@@ -82,7 +83,7 @@ TicTacToeBoard.prototype.findWinner = function(x, y, stepX, stepY) {
   if(!first.equalTo(second)) return false;
   var third = this.at(x + (stepX * 2), y + (stepY * 2));
   if(!first.equalTo(third)) return false;
-  this.winner = first.isPlayer1() ? this.player1 : this.player2;
+  if(first.isPlayer1()) this.getWinner().markAsPlayer1(); else this.getWinner().markAsPlayer2();
   return true;
 };
 
