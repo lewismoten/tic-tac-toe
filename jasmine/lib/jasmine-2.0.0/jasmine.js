@@ -1145,7 +1145,12 @@ getJasmineRequireObj().ExceptionFormatter = function() {
     };
 
     this.stack = function(error) {
-      return error ? error.stack : null;
+      if(error){
+        return error.stack.replace(/( \().*?(jasmine.js\:)/gi, "$1$2");
+      }
+      else {
+        return null;
+      }
     };
   }
 
