@@ -9,32 +9,26 @@ describe("TicTacToeMark", function() {
   });
 
   describe("empty", function() {
-    it("is not player 1", function() {
+    it("is not first player", function() {
       expect(mark.isPlayer1()).toEqual(false);
     });
   
-    it("is not player 2", function() {
+    it("is not second player", function() {
       expect(mark.isPlayer2()).toEqual(false);
-      expect(mark.data().isPlayer2).toEqual(false);
     });
   
     it("string value is ' '", function() {
       expect(mark.toString()).toEqual(" ");
     });
     
-    it("data structure", function() {
+    it("serializes itself", function() {
       expect(mark.data()).toEqual({
-        isFirstPlayer: false,
-        isPlayer2: false,
-        isEmpty: true,
-        text: " "
+        isFirstPlayer: mark.isPlayer1(),
+        isSecondPlayer: mark.isPlayer2(),
+        isEmpty: mark.isEmpty(),
+        text: mark.toString()
       });
-    it("data compare", function() {
-      expect(mark.data()).toEqual(mark.data());
-      var other = new TicTacToeMark();
-      expect(other.data()).toEqual(mark.data());
     });
-  });
     
     describe("equalTo", function() {
 
@@ -76,6 +70,15 @@ describe("TicTacToeMark", function() {
       expect(mark.toString()).toEqual("X");
     });
     
+    it("serializes itself", function() {
+      expect(mark.data()).toEqual({
+        isFirstPlayer: mark.isPlayer1(),
+        isSecondPlayer: mark.isPlayer2(),
+        isEmpty: mark.isEmpty(),
+        text: mark.toString()
+      });
+    });
+    
     it("can not be marked again", function() {
       expect(mark.markAsPlayer1()).toEqual(false);
     });
@@ -99,12 +102,12 @@ describe("TicTacToeMark", function() {
         var other = new TicTacToeMark();
         expect(mark.equalTo(other)).toEqual(false);
       });
-      it("is player 1", function() {
+      it("is first player", function() {
         var other = new TicTacToeMark();
         other.markAsPlayer1();
         expect(mark.equalTo(other)).toEqual(true);
       });
-      it("is not player 2", function() {
+      it("is not second player", function() {
         var other = new TicTacToeMark();
         other.markAsPlayer2();
         expect(mark.equalTo(other)).toEqual(false);
@@ -112,7 +115,7 @@ describe("TicTacToeMark", function() {
     });
   });
 
-  describe("marked as player 2", function() {
+  describe("marked as second player", function() {
     beforeEach(function() {
       expect(mark.markAsPlayer2()).toEqual(true);
     });
@@ -121,11 +124,11 @@ describe("TicTacToeMark", function() {
       expect(mark.isEmpty()).toEqual(false);
     });
 
-    it("is not player 1", function() {
+    it("is not first player", function() {
       expect(mark.isPlayer1()).toEqual(false);
     });
 
-    it("is player 2", function() {
+    it("is second player", function() {
       expect(mark.isPlayer2()).toEqual(true);
     });
 
@@ -143,18 +146,27 @@ describe("TicTacToeMark", function() {
       expect(mark.isPlayer2()).toEqual(true);
     });
 
+    it("serializes itself", function() {
+      expect(mark.data()).toEqual({
+        isFirstPlayer: mark.isPlayer1(),
+        isSecondPlayer: mark.isPlayer2(),
+        isEmpty: mark.isEmpty(),
+        text: mark.toString()
+      });
+    });
+
     describe("equalTo", function() {
 
       it("is not empty", function() {
         var other = new TicTacToeMark();
         expect(mark.equalTo(other)).toEqual(false);
       });
-      it("is not player 1", function() {
+      it("is not first player", function() {
         var other = new TicTacToeMark();
         other.markAsPlayer1();
         expect(mark.equalTo(other)).toEqual(false);
       });
-      it("is player 2", function() {
+      it("is second player", function() {
         var other = new TicTacToeMark();
         other.markAsPlayer2();
         expect(mark.equalTo(other)).toEqual(true);

@@ -33,7 +33,7 @@ function TicTacToeMark(onMark) {
   this.data = function() {
     return {
       isFirstPlayer: this.isPlayer1(),
-      isPlayer2: this.isPlayer2(),
+      isSecondPlayer: this.isPlayer2(),
       isEmpty: this.isEmpty(),
       text: this.toString()
       };
