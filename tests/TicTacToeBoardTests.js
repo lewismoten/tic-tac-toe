@@ -5,7 +5,7 @@ describe("TicTacToeBoard", function() {
   });
   
   it("starts with first player", function() {
-    expect(board.getPlayer()).toEqual(board.player1);
+    expect(board.getPlayer().isFirst).toEqual(true);
   });
   
   it("starts without a winner", function() {
@@ -76,7 +76,7 @@ describe("TicTacToeBoard", function() {
       });
       
       it("becomes the second players turn", function() {
-        expect(board.getPlayer()).toEqual(board.player2);
+        expect(board.getPlayer().isSecond).toEqual(true);
       });
       
       it("can not be changed", function(){
@@ -103,7 +103,7 @@ describe("TicTacToeBoard", function() {
       });
       
       it("becomes the first players turn", function() {
-        expect(board.getPlayer()).toEqual(board.player1);
+        expect(board.getPlayer().isFirst).toEqual(true);
       });
       
       it("can not be changed", function(){
@@ -146,7 +146,8 @@ describe("TicTacToeBoard", function() {
       });
   
       it("is no ones turn", function() {
-        expect(board.getPlayer()).toEqual(board.empty);
+        expect(board.getPlayer().isFirst).toEqual(false);
+        expect(board.getPlayer().isSecond).toEqual(false);
       });
 
     });
@@ -165,7 +166,8 @@ describe("TicTacToeBoard", function() {
       });
 
       it("is no ones turn", function() {
-        expect(board.getPlayer()).toEqual(board.empty);
+        expect(board.getPlayer().isFirst).toEqual(false);
+        expect(board.getPlayer().isSecond).toEqual(false);
       });
       
       it("can not mark an empty cell", function(){

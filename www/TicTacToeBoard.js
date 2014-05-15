@@ -3,9 +3,6 @@ function TicTacToeBoard() {
   var player = 1;
   var cell = new Array(3);
   var board = this;
-
-  this.player1 = 1;
-  this.player2 = -1;
   var winner = new TicTacToeMark();
 
   this.getWinner = function() { return winner; };
@@ -13,7 +10,7 @@ function TicTacToeBoard() {
   var onMarkCell = function() {
     if(board.isGameOver()) return false;
     if(!this.data().isEmpty) return false;
-    if(player == board.player1)
+    if(board.getPlayer().isFirst)
     {
       if(this.markAsFirstPlayer() === false) throw new Exception("Mark failed");
     }
@@ -34,7 +31,12 @@ function TicTacToeBoard() {
   }
   
   this.mark = function(x, y) { return cell[x][y].mark(); };
-  this.getPlayer = function() { return player; };
+  this.getPlayer = function() {
+    return {
+      isFirst: player === 1,
+      isSecond: player === -1
+    };
+  };
   this.at = function(column, row) { return cell[column][row].data(); };
 
   this.changePlayer = function() {
