@@ -4,7 +4,6 @@ function TicTacToeBoard() {
   var cell = new Array(3);
   var board = this;
 
-  this.empty = 0;
   this.player1 = 1;
   this.player2 = -1;
   var winner = new TicTacToeMark();
