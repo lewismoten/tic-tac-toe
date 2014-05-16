@@ -19,6 +19,8 @@ function TicTacToeBoard() {
   this.at = function(x, y) { return getCell(x, y).data(); };
   this.mark = function(x, y) { return getCell(x, y).mark(); };
   this.hasWinner = function() { return winner !== 0; };
+  this.isFull = function() { for(var i = 0; i < 9; i++) if(cell[i].data().isEmpty) return false; return true; };
+  this.isEmpty = function() { for(var i = 0; i < 9; i++) if(!cell[i].data().isEmpty) return false; return true; };
 
   var getCell = function(x, y){
     if(x < 0 || x > 2 || y < 0 || y > 2) {
@@ -55,24 +57,6 @@ TicTacToeBoard.prototype.isMatch = function(a, b) {
 
 TicTacToeBoard.prototype.isGameOver = function() {
   return this.hasWinner() || this.isFull();
-};
-
-TicTacToeBoard.prototype.isFull = function() {
-  for(x = 0; x < 3; x++) {
-    for(y = 0; y < 3; y++) {
-      if(this.at(x, y).isEmpty) return false;
-    }
-  }
-  return true;
-};
-  
-TicTacToeBoard.prototype.isEmpty = function() {
-  for(x = 0; x < 3; x++) {
-    for(y = 0; y < 3; y++) {
-      if(!this.at(x, y).isEmpty) return false;
-    }
-  }
-  return true;
 };
 
 TicTacToeBoard.prototype.toString = function() {
