@@ -5,6 +5,8 @@ function TicTacToeBoard() {
   var board = this;
   var winner = 0;
   var winningScenarios = [0x07,0x38,0x49,0x54,0x92,0x0111,0x124,0x01C0];
+  var firstPlayerMarks = 0;
+  var secondPlayerMarks = 0;
 
   // TODO: rename
   var po = function(order) {
@@ -26,7 +28,17 @@ function TicTacToeBoard() {
   this.getPlayer = function() { return po(player); };
   this.getWinner = function() { return po(winner); };
   this.at = function(x, y) { return getCell(x, y).data(); };
-  this.mark = function(x, y) { return getCell(x, y).mark(); };
+  this.mark = function(x, y) {
+    var i = 1 << 8 - ((y*3)+x);
+    if((firstPlayerMarks & i) == i) return false;
+    if((secondPlayerMarks & i) == i) return false;
+    if(player == 1) {
+      firstPlayerMarks |= i;
+    } else {
+      secondPlayerMarks |= i;
+    }
+    return getCell(x, y).mark();
+  };
   this.hasWinner = function() { return winner !== 0; };
   this.isFull = function() { return (getMask(true) | getMask(false)) === 0x01FF; };
   this.isEmpty = function() { return (getMask(true) | getMask(false)) === 0x00; };
@@ -39,8 +51,6 @@ function TicTacToeBoard() {
   };
 
   var onMarked = function() {
-    var firstPlayerMarks = getMask(true);
-    var secondPlayerMarks = getMask(false);
     for(var i = 0; i < winningScenarios.length; i++) {
       var scenario = winningScenarios[i];
       if((scenario & firstPlayerMarks) == scenario) {
