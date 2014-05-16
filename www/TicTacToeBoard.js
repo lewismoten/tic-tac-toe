@@ -57,16 +57,6 @@ TicTacToeBoard.prototype.isGameOver = function() {
   return this.hasWinner() || this.isFull();
 };
 
-
-TicTacToeBoard.prototype.checkForWinner = function() {
-  for(i = 0; i < 3; i++) {
-    if(this.findWinner(i, 0, 0, 1)) return;
-    if(this.findWinner(0, i, 1, 0))  return;
-  }
-  if(this.findWinner(0, 0, 1, 1)) return;
-  this.findWinner(0, 2, 1, -1);
-};
-
 TicTacToeBoard.prototype.isFull = function() {
   for(x = 0; x < 3; x++) {
     for(y = 0; y < 3; y++) {
@@ -83,15 +73,6 @@ TicTacToeBoard.prototype.isEmpty = function() {
     }
   }
   return true;
-};
-
-
-TicTacToeBoard.prototype.isWinningPath = function(x, y, stepX, stepY) {
-  if(this.at(x, y).isEmpty) return false;
-  var first = {x: x, y: y};
-  var second = {x: first.x + stepX, y: first.y + stepY};
-  var third = {x: second.x + stepX, y: second.y + stepY};
-  return this.isMatch(first, second) && this.isMatch(first, third);
 };
 
 TicTacToeBoard.prototype.toString = function() {
