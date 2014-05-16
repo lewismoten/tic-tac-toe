@@ -146,10 +146,6 @@ describe("TicTacToeBoard", function() {
       });
 
     });
-    var mark = function(x, y, player1) {
-      expect(board.getPlayer()).toEqual(player1 ? board.player1 : board.player2);
-      expect(board.mark(x, y)).toEqual(true);
-    };
     describe("on win", function() {
       beforeEach(function() {
         board.importPlay(14253);
