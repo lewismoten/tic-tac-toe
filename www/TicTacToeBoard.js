@@ -20,7 +20,7 @@ function TicTacToeBoard() {
    };
 
   this.getPlayer = function() { return playerToken(player === 1, player === -1); };
-  this.getWinner = function() { return po(winner); };
+  this.getWinner = function() { return playerToken(winner === 1, winner === -1); };
   this.at = function(x, y) {
     var i = getIndex(x, y);
     var first = (firstPlayerMarks & i) == i;

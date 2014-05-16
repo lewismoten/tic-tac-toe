@@ -137,12 +137,8 @@ describe("TicTacToeBoard", function() {
         expect(board.isFull()).toEqual(true);
       });
   
-      it("first player is not a winner", function() {
-        expect(board.getWinner().isFirst).toEqual(false);
-      });
-  
-      it("second player is not a winner", function() {
-        expect(board.getWinner().isSecond).toEqual(false);
+      it("has no winner", function() {
+        expect(board.getWinner()).toEqual(board.noPlayerToken);
       });
 
       it("is no ones turn", function() {
@@ -175,13 +171,13 @@ describe("TicTacToeBoard", function() {
 
       describe("winner", function(){
         it("can be first player", function() {
-          expect(board.getWinner().isFirst).toEqual(true);
+          expect(board.getWinner()).toEqual(board.firstPlayerToken);
         });
         
         it("can be second player", function() {
           var board2 = new TicTacToeBoard();
           board2.importPlay(123568);
-          expect(board2.getWinner().isSecond).toEqual(true);
+          expect(board2.getWinner()).toEqual(board.secondPlayerToken);
         });
       });
 
