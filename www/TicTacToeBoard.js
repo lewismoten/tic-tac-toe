@@ -1,7 +1,7 @@
 function TicTacToeBoard() {
   
   var player = 1;
-  var cell = new Array(3);
+  var cell = new Array(9);
   var board = this;
   var winner = 0;
 
@@ -15,21 +15,24 @@ function TicTacToeBoard() {
   
   this.getPlayer = function() { return po(player); };
   this.getWinner = function() { return po(winner); };
-  this.at = function(column, row) { return cell[column][row].data(); };
-  this.mark = function(x, y) {
-    return cell[x][y].mark();
+  this.at = function(x, y) { return getCell(x, y).data(); };
+  this.mark = function(x, y) { return getCell(x, y).mark(); };
+
+  var getCell = function(x, y){
+    if(x < 0 || x > 2 || y < 0 || y > 2) {
+      throw new Error("Does not exist (" + x + ", " + y + ")");
+      
+    }
+    return cell[(y*3)+x];
   };
-  
+
   var onMarked = function() {
     board.checkForWinner();
     player *= board.isGameOver() ? 0 : -1;
   };
 
-  for(x = 0; x < 3; x++) {
-    cell[x] = new Array(3);
-    for(y = 0; y < 3; y++) {
-      cell[x][y] = new TicTacToeMark(this.getPlayer, onMarked);
-    }
+  for(i = 0; i < 9; i++) {
+    cell[i] = new TicTacToeMark(this.getPlayer, onMarked);
   }
 
   this.findWinner = function(x, y, stepX, stepY) {
