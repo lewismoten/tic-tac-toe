@@ -18,8 +18,23 @@ function TicTacToeBoard() {
 
   this.getPlayer = function() { return po(player); };
   this.getWinner = function() { return po(winner); };
-  this.at = function(x, y) { return getCell(x, y).data(); };
+  this.at = function(x, y) {
+    var i = 1 << 8 - getIndex(x, y);
+    var cellMark = {
+      isFirstPlayer: (firstPlayerMarks & i) == i,
+      isSecondPlayer: (secondPlayerMarks & i) == i,
+      isEmpty: ((firstPlayerMarks | secondPlayerMarks) & i) === 0x00,
+      text: " "
+      };
+    if(cellMark.isFirstPlayer) {
+      cellMark.text = "X";
+    } else if(cellMark.isSecondPlayer) {
+      cellMark.text = "O";
+    }
+    return cellMark;
+  };
   this.mark = function(x, y) {
+    if(winner !== 0) return false;
     var i = 1 << 8 - ((y*3)+x);
     if((firstPlayerMarks & i) == i) return false;
     if((secondPlayerMarks & i) == i) return false;
@@ -34,11 +49,14 @@ function TicTacToeBoard() {
   this.isFull = function() { return (firstPlayerMarks | secondPlayerMarks) === 0x01FF; };
   this.isEmpty = function() { return (firstPlayerMarks | secondPlayerMarks) === 0x00; };
 
-  var getCell = function(x, y){
+  var getIndex = function(x, y){
     if(x < 0 || x > 2 || y < 0 || y > 2) {
       throw new Error("Does not exist (" + x + ", " + y + ")");
     }
-    return cell[(y*3)+x];
+    return (y*3)+x;
+  };
+  var getCell = function(x, y){
+    return cell[getIndex(x, y)];
   };
 
   var onMarked = function() {
