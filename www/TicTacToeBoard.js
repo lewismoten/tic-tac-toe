@@ -40,8 +40,8 @@ function TicTacToeBoard() {
     return getCell(x, y).mark();
   };
   this.hasWinner = function() { return winner !== 0; };
-  this.isFull = function() { return (getMask(true) | getMask(false)) === 0x01FF; };
-  this.isEmpty = function() { return (getMask(true) | getMask(false)) === 0x00; };
+  this.isFull = function() { return (firstPlayerMarks | secondPlayerMarks) === 0x01FF; };
+  this.isEmpty = function() { return (firstPlayerMarks | secondPlayerMarks) === 0x00; };
 
   var getCell = function(x, y){
     if(x < 0 || x > 2 || y < 0 || y > 2) {
