@@ -47,9 +47,11 @@ function TicTacToeBoard() {
     for(var i = 0; i < winningPaths.length; i++) {
       var path = winningPaths[i];
       var a = cell[path[0]];
+      if(a.data().isEmpty) continue;
       var b = cell[path[1]];
+      if(!a.equalTo(b)) continue;
       var c = cell[path[2]];
-      if(a.equalTo(b) && b.equalTo(c) && a.data().isEmpty !== true) { return true; }
+      if(a.equalTo(c)) return true;
     }
     return false;
   };
