@@ -4,7 +4,7 @@ function TicTacToeBoard() {
   var cell = new Array(9);
   var board = this;
   var winner = 0;
-  var winningPaths = ["012","345","678","036","147","258","048","246"];
+  var winningScenarios = [0x07,0x38,0x49,0x54,0x92,0x0111,0x124,0x01C0];
 
   // TODO: rename
   var po = function(order) {
@@ -13,6 +13,15 @@ function TicTacToeBoard() {
       isSecond: order === -1
     };
    };
+  var getMask = function(p1) {
+    var p = 0;
+    for(i = 0; i < 9; i++)
+    {
+      if(cell[i].data().isFirstPlayer && p1) p |= 1 << (8 - i);
+      else if(cell[i].data().isSecondPlayer && !p1) p |= 1 << (8 - i);
+    }
+    return p;
+  };
   
   this.getPlayer = function() { return po(player); };
   this.getWinner = function() { return po(winner); };
@@ -25,21 +34,21 @@ function TicTacToeBoard() {
   var getCell = function(x, y){
     if(x < 0 || x > 2 || y < 0 || y > 2) {
       throw new Error("Does not exist (" + x + ", " + y + ")");
-      
     }
     return cell[(y*3)+x];
   };
 
   var onMarked = function() {
-    for(var i = 0; i < winningPaths.length; i++) {
-      var path = winningPaths[i];
-      var a = cell[path[0]];
-      if(a.data().isEmpty) continue;
-      var b = cell[path[1]];
-      if(!a.equalTo(b)) continue;
-      var c = cell[path[2]];
-      if(a.equalTo(c)) {
-        winner = a.data().isFirstPlayer ? 1 : -1;
+    var firstPlayerMarks = getMask(true);
+    var secondPlayerMarks = getMask(false);
+    for(var i = 0; i < winningScenarios.length; i++) {
+      var scenario = winningScenarios[i];
+      if((scenario & firstPlayerMarks) == scenario) {
+        winner = 1;
+        break;
+      }
+      else if((scenario & secondPlayerMarks) == scenario) {
+        winner = -1;
         break;
       }
     }
