@@ -22,15 +22,18 @@ function TicTacToeBoard() {
   this.getPlayer = function() { return po(player); };
   this.getWinner = function() { return po(winner); };
   this.at = function(x, y) {
-    var i = 1 << (8 - getIndex(x, y));
+    var i = getIndex(x, y);
     var first = (firstPlayerMarks & i) == i;
     var second = (secondPlayerMarks & i) == i;
-    return first ? this.firstPlayerToken : second ? this.secondPlayerToken : this.unoccupiedToken;
+    return playerToken(first, second);
+  };
+  var playerToken = function(isFirst, isSecond) {
+    return isFirst ? board.firstPlayerToken : isSecond ? board.secondPlayerToken : board.unoccupiedToken;
   };
 
   this.mark = function(x, y) {
     if(winner !== 0) return false;
-    var i = 1 << 8 - getIndex(x, y);
+    var i = getIndex(x, y);
     if((firstPlayerMarks & i) == i) return false;
     if((secondPlayerMarks & i) == i) return false;
     if(player == 1) {
@@ -42,14 +45,15 @@ function TicTacToeBoard() {
     return true;
   };
   this.hasWinner = function() { return winner !== 0; };
-  this.isFull = function() { return (firstPlayerMarks | secondPlayerMarks) === 0x01FF; };
-  this.isEmpty = function() { return (firstPlayerMarks | secondPlayerMarks) === 0x00; };
+  this.marks = function() { return firstPlayerMarks | secondPlayerMarks; };
+  this.isFull = function() { return this.marks() === 0x01FF; };
+  this.isEmpty = function() { return this.marks() === 0x00; };
 
   var getIndex = function(x, y){
     if(x < 0 || x > 2 || y < 0 || y > 2) {
-      throw new Error("Does not exist (" + x + ", " + y + ")");
+      throw new Error();
     }
-    return (y*3)+x;
+    return 1 << (8 - ((y*3)+x));
   };
 
   var onMarked = function() {
