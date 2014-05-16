@@ -4,6 +4,7 @@ function TicTacToeBoard() {
   var cell = new Array(9);
   var board = this;
   var winner = 0;
+  var winningPaths = ["012","345","678","036","147","258","048","246"];
 
   // TODO: rename
   var po = function(order) {
@@ -42,6 +43,16 @@ function TicTacToeBoard() {
     }
     return false;
   };
+  this.hasWinner = function() {
+    for(var i = 0; i < winningPaths.length; i++) {
+      var path = winningPaths[i];
+      var a = cell[path[0]];
+      var b = cell[path[1]];
+      var c = cell[path[2]];
+      if(a.equalTo(b) && b.equalTo(c) && a.data().isEmpty !== true) { return true; }
+    }
+    return false;
+  };
 }
 
 TicTacToeBoard.prototype.isMatch = function(a, b) {
@@ -52,9 +63,6 @@ TicTacToeBoard.prototype.isGameOver = function() {
   return this.hasWinner() || this.isFull();
 };
 
-TicTacToeBoard.prototype.hasWinner = function() {
-  return this.getWinner().isFirst || this.getWinner().isSecond;
-};
 
 TicTacToeBoard.prototype.checkForWinner = function() {
   for(i = 0; i < 3; i++) {
