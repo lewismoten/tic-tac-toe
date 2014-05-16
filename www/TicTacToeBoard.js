@@ -11,61 +11,74 @@ function TicTacToeBoard() {
   this.secondPlayerToken = "O";
   this.noPlayerToken = " ";
 
+  this.marks = function() { return firstPlayerMarks | secondPlayerMarks; };
   this.getPlayer = function() { return playerToken(player === 1, player === -1); };
   this.getWinner = function() { return playerToken(winner === 1, winner === -1); };
+  this.isMarked = function(x, y) { var i = this.getIndex(x, y); return (this.marks() & i) == i; };
   this.at = function(x, y) {
-    var i = getIndex(x, y);
+    var i = this.getIndex(x, y);
     var first = (firstPlayerMarks & i) == i;
     var second = (secondPlayerMarks & i) == i;
     return playerToken(first, second);
   };
+  
   var playerToken = function(isFirst, isSecond) {
     return isFirst ? board.firstPlayerToken : isSecond ? board.secondPlayerToken : board.noPlayerToken;
   };
 
-  this.mark = function(x, y) {
-    if(winner !== 0) return false;
-    var i = getIndex(x, y);
-    if((firstPlayerMarks & i) == i) return false;
-    if((secondPlayerMarks & i) == i) return false;
-    if(player == 1) {
-      firstPlayerMarks |= i;
-    } else {
-      secondPlayerMarks |= i;
-    }
-    onMarked();
-    return true;
+  var applyMark = function(x, y) {
+    var i = board.getIndex(x, y);
+    if(player == 1) firstPlayerMarks |= i; else secondPlayerMarks |= i;
   };
-  this.hasWinner = function() { return winner !== 0; };
-  this.marks = function() { return firstPlayerMarks | secondPlayerMarks; };
-  this.isFull = function() { return this.marks() === 0x01FF; };
-  this.isEmpty = function() { return this.marks() === 0x00; };
-
-  var getIndex = function(x, y){
-    if(x < 0 || x > 2 || y < 0 || y > 2) {
-      throw new Error();
-    }
-    return 1 << (8 - ((y*3)+x));
-  };
-
-  var onMarked = function() {
+  
+  var discoverWinner = function() {
     for(var i = 0; i < winningScenarios.length; i++) {
       var scenario = winningScenarios[i];
       if((scenario & firstPlayerMarks) == scenario) {
-        winner = 1;
-        break;
+        return 1;
       }
       else if((scenario & secondPlayerMarks) == scenario) {
-        winner = -1;
-        break;
+        return -1;
       }
     }
+    return 0;
+  };
+  
+  var setNextPlayer = function() {
     player *= board.isGameOver() ? 0 : -1;
+  };
+  
+  this.mark = function(x, y) {
+    if(winner !== 0) return false;
+    if(this.isMarked(x, y)) return false;
+    applyMark(x, y);
+    winner = discoverWinner();
+    setNextPlayer();
+    return true;
   };
 }
 
+TicTacToeBoard.prototype.getIndex = function(x, y){
+  if(x < 0 || x > 2 || y < 0 || y > 2) {
+    throw new Error();
+  }
+  return 1 << (8 - ((y*3)+x));
+};
+
+TicTacToeBoard.prototype.isFull = function() {
+  return this.marks() === 0x01FF;
+};
+
+TicTacToeBoard.prototype.isEmpty = function() {
+  return this.marks() === 0x00;
+};
+
 TicTacToeBoard.prototype.isGameOver = function() {
   return this.hasWinner() || this.isFull();
+};
+
+TicTacToeBoard.prototype.hasWinner = function() {
+  return this.noPlayerToken !== this.getWinner();
 };
 
 TicTacToeBoard.prototype.toString = function() {
