@@ -15,16 +15,7 @@ function TicTacToeBoard() {
       isSecond: order === -1
     };
    };
-  var getMask = function(p1) {
-    var p = 0;
-    for(i = 0; i < 9; i++)
-    {
-      if(cell[i].data().isFirstPlayer && p1) p |= 1 << (8 - i);
-      else if(cell[i].data().isSecondPlayer && !p1) p |= 1 << (8 - i);
-    }
-    return p;
-  };
-  
+
   this.getPlayer = function() { return po(player); };
   this.getWinner = function() { return po(winner); };
   this.at = function(x, y) { return getCell(x, y).data(); };
