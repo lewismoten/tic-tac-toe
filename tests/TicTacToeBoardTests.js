@@ -67,12 +67,8 @@ describe("TicTacToeBoard", function() {
         board.importPlay(1);
       });
       
-      it("occupies a cell", function() {
-        expect(board.at(0, 0).isEmpty).toEqual(false);
-      });
-      
-      it("is the first player", function() {
-        expect(board.at(0, 0).isFirstPlayer).toEqual(true);
+      it("is marked for first player", function() {
+        expect(board.at(0, 0)).toEqual(board.firstPlayerToken);
       });
       
       it("becomes the second players turn", function() {
@@ -81,7 +77,7 @@ describe("TicTacToeBoard", function() {
       
       it("can not be changed", function(){
         expect(board.mark(0, 0)).toEqual(false);
-        expect(board.at(0, 0).isFirstPlayer).toEqual(true);
+        expect(board.at(0, 0)).toEqual(board.firstPlayerToken);
       });
     });
     
@@ -91,15 +87,15 @@ describe("TicTacToeBoard", function() {
       });
   
       it("occupies a cell", function() {
-        expect(board.at(1, 0).isEmpty).toEqual(false);
+        expect(board.at(1, 0)).toEqual(board.secondPlayerToken);
       });
       
       it("does not match the previous mark", function() {
-        expect(board.at(0, 0).text).not.toEqual(board.at(1, 0));
+        expect(board.at(1, 0)).not.toEqual(board.at(0, 0));
       });
   
       it("is second player", function() {
-        expect(board.at(1, 0).isSecondPlayer).toEqual(true);
+        expect(board.at(1, 0)).toEqual(board.secondPlayerToken);
       });
       
       it("becomes the first players turn", function() {
@@ -108,7 +104,7 @@ describe("TicTacToeBoard", function() {
       
       it("can not be changed", function(){
         expect(board.mark(1, 0)).toEqual(false);
-        expect(board.at(1, 0).isSecondPlayer).toEqual(true);
+        expect(board.at(1, 0)).toEqual(board.secondPlayerToken);
       });
     });
   
@@ -118,11 +114,11 @@ describe("TicTacToeBoard", function() {
       });
   
       it("matches the first mark", function() {
-        expect(board.at(0, 0).text).toEqual(board.at(2, 0).text);
+        expect(board.at(2, 0)).toEqual(board.at(0, 0));
       });
       
       it("is the first player", function() {
-        expect(board.at(2, 0).isFirstPlayer).toEqual(true);
+        expect(board.at(2, 0)).toEqual(board.firstPlayerToken);
       });
     });
   });
@@ -176,7 +172,7 @@ describe("TicTacToeBoard", function() {
       
       it("can not mark an empty cell", function(){
         expect(board.mark(2, 2)).toEqual(false);
-        expect(board.at(2, 2).isEmpty).toEqual(true);
+        expect(board.at(2, 2)).toEqual(board.unoccupiedToken);
       });
 
       describe("winner", function(){

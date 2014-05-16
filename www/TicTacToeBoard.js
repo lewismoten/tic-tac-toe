@@ -1,10 +1,3 @@
-function cellMark(first, second) {
-  this.isFirstPlayer = first;
-  this.isSecondPlayer = second;
-  this.isEmpty = !(first || second);
-  this.text = first ? "X" : second ? "O" : " ";
-}
-
 function TicTacToeBoard() {
   
   var player = 1;
@@ -13,6 +6,10 @@ function TicTacToeBoard() {
   var winningScenarios = [0x07,0x38,0x49,0x54,0x92,0x0111,0x124,0x01C0];
   var firstPlayerMarks = 0;
   var secondPlayerMarks = 0;
+  
+  this.firstPlayerToken = "X";
+  this.secondPlayerToken = "O";
+  this.unoccupiedToken = " ";
 
   // TODO: rename
   var po = function(order) {
@@ -25,11 +22,10 @@ function TicTacToeBoard() {
   this.getPlayer = function() { return po(player); };
   this.getWinner = function() { return po(winner); };
   this.at = function(x, y) {
-    var i = getIndex(x, y);
-    i = 1 << (8 - i);
+    var i = 1 << (8 - getIndex(x, y));
     var first = (firstPlayerMarks & i) == i;
     var second = (secondPlayerMarks & i) == i;
-    return new cellMark(first, second);
+    return first ? this.firstPlayerToken : second ? this.secondPlayerToken : this.unoccupiedToken;
   };
 
   this.mark = function(x, y) {
@@ -81,7 +77,7 @@ TicTacToeBoard.prototype.toString = function() {
   for(x = 0; x < 3; x++) {
     if(x !== 0) sb += "|";
     for(y = 0; y < 3; y++) {
-      sb += this.at(y, x).text;
+      sb += this.at(y, x);
     }
   }
   sb += "]";
