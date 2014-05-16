@@ -12,11 +12,11 @@ onMarked - calback after the mark has changed for callee to perform actions afte
 function TicTacToeMark(onGetPlayer, onMarked) {
   var firstPlayer = "X";
   var secondPlayer = "O";
-  var empty = " ";
-  var value = " ";
+  var unmarked = " ";
+  var value = unmarked;
   
   this.mark = function() {
-    if(value !== empty) return false;
+    if(value !== unmarked) return false;
     if(onGetPlayer){
 
     var player = onGetPlayer();
@@ -30,14 +30,14 @@ function TicTacToeMark(onGetPlayer, onMarked) {
     if(onMarked) onMarked();
     return true;
     }
-    throw new Error("Can not mark without knowing the player.")
+    throw new Error("Can not mark without knowing the player.");
   };
   
   this.data = function() {
     return {
       isFirstPlayer: value == firstPlayer,
       isSecondPlayer: value == secondPlayer,
-      isEmpty: value == empty,
+      isEmpty: value == unmarked,
       text: value
       };
   };
