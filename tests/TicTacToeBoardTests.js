@@ -95,7 +95,7 @@ describe("TicTacToeBoard", function() {
       });
       
       it("does not match the previous mark", function() {
-        expect(board.isMatch({x:0,y:0}, {x:1,y:0})).toEqual(false);
+        expect(board.at(0, 0).text).not.toEqual(board.at(1, 0));
       });
   
       it("is second player", function() {
@@ -118,7 +118,7 @@ describe("TicTacToeBoard", function() {
       });
   
       it("matches the first mark", function() {
-        expect(board.isMatch({x:0,y:0}, {x:2,y:0})).toEqual(true);
+        expect(board.at(0, 0).text).toEqual(board.at(2, 0).text);
       });
       
       it("is the first player", function() {

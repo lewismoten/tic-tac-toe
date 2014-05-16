@@ -1,3 +1,10 @@
+function cellMark(first, second) {
+  this.isFirstPlayer = first;
+  this.isSecondPlayer = second;
+  this.isEmpty = !(first || second);
+  this.text = first ? "X" : second ? "O" : " ";
+}
+
 function TicTacToeBoard() {
   
   var player = 1;
@@ -18,19 +25,11 @@ function TicTacToeBoard() {
   this.getPlayer = function() { return po(player); };
   this.getWinner = function() { return po(winner); };
   this.at = function(x, y) {
-    var i = 1 << 8 - getIndex(x, y);
-    var cellMark = {
-      isFirstPlayer: (firstPlayerMarks & i) == i,
-      isSecondPlayer: (secondPlayerMarks & i) == i,
-      isEmpty: ((firstPlayerMarks | secondPlayerMarks) & i) === 0x00,
-      text: " "
-      };
-    if(cellMark.isFirstPlayer) {
-      cellMark.text = "X";
-    } else if(cellMark.isSecondPlayer) {
-      cellMark.text = "O";
-    }
-    return cellMark;
+    var i = getIndex(x, y);
+    i = 1 << (8 - i);
+    var first = (firstPlayerMarks & i) == i;
+    var second = (secondPlayerMarks & i) == i;
+    return new cellMark(first, second);
   };
 
   this.mark = function(x, y) {
@@ -72,10 +71,6 @@ function TicTacToeBoard() {
     player *= board.isGameOver() ? 0 : -1;
   };
 }
-
-TicTacToeBoard.prototype.isMatch = function(a, b) {
-  return this.at(a.x, a.y).text === this.at(b.x, b.y).text;
-};
 
 TicTacToeBoard.prototype.isGameOver = function() {
   return this.hasWinner() || this.isFull();
