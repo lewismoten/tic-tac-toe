@@ -11,14 +11,6 @@ function TicTacToeBoard() {
   this.secondPlayerToken = "O";
   this.noPlayerToken = " ";
 
-  // TODO: rename
-  var po = function(order) {
-    return {
-      isFirst: order === 1,
-      isSecond: order === -1
-    };
-   };
-
   this.getPlayer = function() { return playerToken(player === 1, player === -1); };
   this.getWinner = function() { return playerToken(winner === 1, winner === -1); };
   this.at = function(x, y) {
