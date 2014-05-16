@@ -146,7 +146,7 @@ describe("TicTacToeBoard", function() {
       });
 
       it("is no ones turn", function() {
-        expect(board.getPlayer()).toEqual(board.unoccupiedToken);
+        expect(board.getPlayer()).toEqual(board.noPlayerToken);
       });
 
     });
@@ -165,12 +165,12 @@ describe("TicTacToeBoard", function() {
       });
 
       it("is no ones turn", function() {
-        expect(board.getPlayer()).toEqual(board.unoccupiedToken);
+        expect(board.getPlayer()).toEqual(board.noPlayerToken);
       });
       
       it("can not mark an empty cell", function(){
         expect(board.mark(2, 2)).toEqual(false);
-        expect(board.at(2, 2)).toEqual(board.unoccupiedToken);
+        expect(board.at(2, 2)).toEqual(board.noPlayerToken);
       });
 
       describe("winner", function(){

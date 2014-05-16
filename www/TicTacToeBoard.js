@@ -9,7 +9,7 @@ function TicTacToeBoard() {
   
   this.firstPlayerToken = "X";
   this.secondPlayerToken = "O";
-  this.unoccupiedToken = " ";
+  this.noPlayerToken = " ";
 
   // TODO: rename
   var po = function(order) {
@@ -28,7 +28,7 @@ function TicTacToeBoard() {
     return playerToken(first, second);
   };
   var playerToken = function(isFirst, isSecond) {
-    return isFirst ? board.firstPlayerToken : isSecond ? board.secondPlayerToken : board.unoccupiedToken;
+    return isFirst ? board.firstPlayerToken : isSecond ? board.secondPlayerToken : board.noPlayerToken;
   };
 
   this.mark = function(x, y) {
