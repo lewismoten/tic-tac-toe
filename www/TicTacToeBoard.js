@@ -14,39 +14,24 @@ function TicTacToeBoard() {
    };
   
   this.getPlayer = function() { return po(player); };
-  
-  this.isMatch = function(pointA, pointB) {
-    return cell[pointA.x][pointA.y].equalTo(cell[pointB.x][pointB.y]);
+  this.getWinner = function() { return po(winner); };
+  this.at = function(column, row) { return cell[column][row].data(); };
+  this.mark = function(x, y) {
+    return cell[x][y].mark();
   };
-
+  
   var onMarked = function() {
     board.checkForWinner();
-    board.changePlayer();
+    player *= board.isGameOver() ? 0 : -1;
   };
 
-  this.getWinner = function() { return po(winner); };
-  
   for(x = 0; x < 3; x++) {
     cell[x] = new Array(3);
     for(y = 0; y < 3; y++) {
       cell[x][y] = new TicTacToeMark(this.getPlayer, onMarked);
     }
   }
-  
-  this.mark = function(x, y) {
-    return cell[x][y].mark();
-  };
-  
-  this.at = function(column, row) { return cell[column][row].data(); };
 
-  this.changePlayer = function() {
-    if(this.isGameOver()) {
-      player = this.empty;
-    } else {
-      player *= -1;
-    }
-  };
-  
   this.findWinner = function(x, y, stepX, stepY) {
     if(this.isWinningPath(x, y, stepX, stepY)) {
       winner = this.at(x, y).isFirstPlayer ? 1 : -1;
@@ -54,8 +39,11 @@ function TicTacToeBoard() {
     }
     return false;
   };
-  
 }
+
+TicTacToeBoard.prototype.isMatch = function(a, b) {
+  return this.at(a.x, a.y).text === this.at(b.x, b.y).text;
+};
 
 TicTacToeBoard.prototype.isGameOver = function() {
   return this.hasWinner() || this.isFull();
