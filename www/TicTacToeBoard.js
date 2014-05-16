@@ -1,7 +1,6 @@
 function TicTacToeBoard() {
   
   var player = 1;
-  var cell = new Array(9);
   var board = this;
   var winner = 0;
   var winningScenarios = [0x07,0x38,0x49,0x54,0x92,0x0111,0x124,0x01C0];
@@ -33,9 +32,10 @@ function TicTacToeBoard() {
     }
     return cellMark;
   };
+
   this.mark = function(x, y) {
     if(winner !== 0) return false;
-    var i = 1 << 8 - ((y*3)+x);
+    var i = 1 << 8 - getIndex(x, y);
     if((firstPlayerMarks & i) == i) return false;
     if((secondPlayerMarks & i) == i) return false;
     if(player == 1) {
@@ -43,7 +43,8 @@ function TicTacToeBoard() {
     } else {
       secondPlayerMarks |= i;
     }
-    return getCell(x, y).mark();
+    onMarked();
+    return true;
   };
   this.hasWinner = function() { return winner !== 0; };
   this.isFull = function() { return (firstPlayerMarks | secondPlayerMarks) === 0x01FF; };
@@ -54,9 +55,6 @@ function TicTacToeBoard() {
       throw new Error("Does not exist (" + x + ", " + y + ")");
     }
     return (y*3)+x;
-  };
-  var getCell = function(x, y){
-    return cell[getIndex(x, y)];
   };
 
   var onMarked = function() {
@@ -73,10 +71,6 @@ function TicTacToeBoard() {
     }
     player *= board.isGameOver() ? 0 : -1;
   };
-
-  for(i = 0; i < 9; i++) {
-    cell[i] = new TicTacToeMark(this.getPlayer, onMarked);
-  }
 }
 
 TicTacToeBoard.prototype.isMatch = function(a, b) {
