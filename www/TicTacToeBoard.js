@@ -28,8 +28,8 @@ function TicTacToeBoard() {
   this.at = function(x, y) { return getCell(x, y).data(); };
   this.mark = function(x, y) { return getCell(x, y).mark(); };
   this.hasWinner = function() { return winner !== 0; };
-  this.isFull = function() { for(var i = 0; i < 9; i++) if(cell[i].data().isEmpty) return false; return true; };
-  this.isEmpty = function() { for(var i = 0; i < 9; i++) if(!cell[i].data().isEmpty) return false; return true; };
+  this.isFull = function() { return (getMask(true) | getMask(false)) === 0x01FF; };
+  this.isEmpty = function() { return (getMask(true) | getMask(false)) === 0x00; };
 
   var getCell = function(x, y){
     if(x < 0 || x > 2 || y < 0 || y > 2) {
