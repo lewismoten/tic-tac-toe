@@ -92,3 +92,27 @@ TicTacToeBoard.prototype.toString = function() {
   sb += "]";
   return sb;
 };
+
+TicTacToeBoard.prototype.importPlay = function(marks) {
+  marks += "";
+  for(var i = 0; i < marks.length; i++)
+  {
+    var x = -1;
+    var y = -1;
+    switch(marks[i])
+    {
+      case "1": x = 0; y = 0; break;
+      case "2": x = 1; y = 0; break;
+      case "3": x = 2; y = 0; break;
+      case "4": x = 0; y = 1; break;
+      case "5": x = 1; y = 1; break;
+      case "6": x = 2; y = 1; break;
+      case "7": x = 0; y = 2; break;
+      case "8": x = 1; y = 2; break;
+      case "9": x = 2; y = 2; break;
+    }
+    if(x == -1 || y == -1) throw new Error("can not find cell for " + marks[i]);
+    var marked = this.mark(x, y);
+    if(!marked) throw new Error("Could not mark cell for " + marks[i]);
+  }
+};
