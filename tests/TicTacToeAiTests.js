@@ -33,11 +33,19 @@ describe("TicTacToeAi", function() {
     expect(play.y).toEqual(0);
   });
 
-  it("blocks opponent", function() {
+  it("blocks opponent when row can not be completed", function() {
     board.importPlay(1475);
     var play = ai.play(board);
     expect(play.x).toEqual(2);
     expect(play.y).toEqual(1);
+  });
+  
+  it("forks when opponent can not be blocked", function() {
+    board.importPlay(12);
+    var play = ai.play(board);
+    expect(play.x).toEqual(2);
+    expect(play.y).toEqual(2);
+    
   });
 
 });

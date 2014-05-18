@@ -5,7 +5,8 @@ function TicTacToeAi() {
   var getStrategy = function() {
     return [
       gameOverStrategy,
-      winStrategy
+      winStrategy,
+      blockStrategy
       ];
   };
 
@@ -18,7 +19,7 @@ function TicTacToeAi() {
       if(move !== null) return move;
     }
     
-     return {x:2, y:1};
+     return {x:2, y:2};
   };
   
   var gameOverStrategy = function(board) {
@@ -37,22 +38,48 @@ function TicTacToeAi() {
       {
         var cell = row[cellIndex];
         
-        if(isMeAt(board, cell))
-        {
+        if(isMeAt(board, cell)) {
           myCount++;
         }
-        else if(isEmptyAt(board, cell))
-        {
+        else if(isEmptyAt(board, cell)) {
           myWin = cell;
         }
-        else
-        {
+        else {
           break;
         }
       }
       
       if(myCount == 2 && myWin != -1) {
         return ai.cellToCoordinates(myWin);
+      }
+    }
+    return null;
+  };
+
+  var blockStrategy = function(board) {
+    for(var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+      var row = rows[rowIndex] + "";
+      
+      var opponentCount = 0;
+      var myBlock = -1;
+      
+      for(cellIndex = 0; cellIndex < row.length; cellIndex++)
+      {
+        var cell = row[cellIndex];
+        
+        if(isMeAt(board, cell)) {
+          break;
+        }
+        else if(isEmptyAt(board, cell)) {
+          myBlock = cell;
+        }
+        else {
+          opponentCount++;
+        }
+      }
+      
+      if(opponentCount == 2 && myBlock != -1) {
+        return ai.cellToCoordinates(myBlock);
       }
     }
     return null;
