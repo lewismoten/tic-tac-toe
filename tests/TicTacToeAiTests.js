@@ -8,13 +8,11 @@ describe("TicTacToeAi", function() {
   });
   
   it("can play", function() {
-    var play = ai.play(board);
-    expect(play).not.toBeNull();
+    expect( function(){ ai.play(board);} ).not.toThrow();
   });
 
   it("can not play a completed game", function() {
     board.importPlay(14253);
-    var play = ai.play(board);
-    expect(play).toBeNull();
+    expect( function(){ ai.play(board);} ).toThrow();
   });
 });
