@@ -4,12 +4,12 @@ function TicTacToeAi() {
   
   var getStrategy = function() {
     return [
+      gameOverStrategy,
       winStrategy
       ];
-  }
+  };
 
   this.play = function(board) {
-    if(board.isGameOver()) throw new Error();
     
     var strategies = getStrategy();
     
@@ -19,6 +19,11 @@ function TicTacToeAi() {
     }
     
      return {x:2, y:1};
+  };
+  
+  var gameOverStrategy = function(board) {
+    if(board.isGameOver()) throw new Error();
+    return null;
   };
   
   var winStrategy = function(board) {
