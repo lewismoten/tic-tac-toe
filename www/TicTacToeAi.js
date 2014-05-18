@@ -1,6 +1,6 @@
 function TicTacToeAi() {
   this.play = function(board) {
     if(board.isGameOver()) throw new Error();
-    return 1;
+    return { x: null, y: null };
   };
 }

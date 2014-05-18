@@ -15,4 +15,14 @@ describe("TicTacToeAi", function() {
     board.importPlay(14253);
     expect( function(){ ai.play(board);} ).toThrow();
   });
+  
+  it("returns x coordinate", function() {
+    var play = ai.play(board);
+    expect(play.x).toBeDefined();
+  });
+  
+  it("returns y coordinate", function() {
+    var play = ai.play(board);
+    expect(play.y).toBeDefined();
+  });
 });
