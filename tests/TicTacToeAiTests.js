@@ -25,4 +25,11 @@ describe("TicTacToeAi", function() {
     var play = ai.play(board);
     expect(play.y).toBeDefined();
   });
+  
+  it("completes a row", function() {
+    board.importPlay(1425);
+    var play = ai.play(board);
+    expect(play.x).toEqual(2);
+    expect(play.y).toEqual(0);
+  });
 });
