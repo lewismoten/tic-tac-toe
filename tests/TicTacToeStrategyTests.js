@@ -30,8 +30,13 @@ describe("TicTacToeStrategy", function() {
     it("blocks opponent before it forks", function() {
       expect(strategy.priorityOf("block win")).toBeLessThan(strategy.priorityOf("fork"));
     });
+    
     it("forks before blocking opponents fork", function() {
       expect(strategy.priorityOf("fork")).toBeLessThan(strategy.priorityOf("block fork"));
+    });
+    
+    it("block opponents fork before taking center", function() {
+      expect(strategy.priorityOf("block fork")).toBeLessThan(strategy.priorityOf("take center"));
     });
   });
   

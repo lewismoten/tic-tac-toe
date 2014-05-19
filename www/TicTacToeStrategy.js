@@ -13,6 +13,7 @@ function TicTacToeStrategy() {
   this.add("block win");
   this.add("fork");
   this.add("block fork");
+  this.add("take center");
 }
 
 TicTacToeStrategy.prototype.priorityOf = function(name) {
