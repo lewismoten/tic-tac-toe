@@ -42,6 +42,10 @@ describe("TicTacToeStrategy", function() {
     it("takes center before taking an opponents opposite corner", function() {
       expect(strategy.priorityOf("take center")).toBeLessThan(strategy.priorityOf("take opponents opposite corner"));
     });
+
+    it("takes opponents opposite corner before taking an empty corner", function() {
+      expect(strategy.priorityOf("take opponents opposite corner")).toBeLessThan(strategy.priorityOf("take empty corner"));
+    });
   });
   
   it("can get all strategies", function() {
