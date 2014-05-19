@@ -21,6 +21,12 @@ describe("TicTacToeStrategy", function() {
     });
   });
 
+  describe("default priorities", function() {
+    it("has win before block", function() {
+      expect(strategy.priorityOf("win")).toBeLessThan(strategy.priorityOf("block"));
+    });
+  });
+  
   it("can get all strategies", function() {
     strategy.add("test");
     var directions = strategy.getAll();
