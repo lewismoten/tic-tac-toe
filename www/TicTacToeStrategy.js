@@ -2,7 +2,7 @@ function TicTacToeStrategy() {
   var strategies = [];
   
   this.add = function(name) {
-    strategies += name;
+    strategies.push(name);
   };
   
   this.getAll = function() {
