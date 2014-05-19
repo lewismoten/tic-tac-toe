@@ -25,6 +25,9 @@ describe("TicTacToeStrategy", function() {
     it("has win before block", function() {
       expect(strategy.priorityOf("win")).toBeLessThan(strategy.priorityOf("block"));
     });
+    it("has block before fork", function() {
+      expect(strategy.priorityOf("block")).toBeLessThan(strategy.priorityOf("fork"));
+    });
   });
   
   it("can get all strategies", function() {
