@@ -5,7 +5,7 @@ function TicTacToeStrategy() {
     strategies.push(name);
   };
   
-  this.getAll = function() {
+  this.getCommands = function() {
     return strategies;
   };
 
@@ -20,5 +20,5 @@ function TicTacToeStrategy() {
 }
 
 TicTacToeStrategy.prototype.priorityOf = function(name) {
-  return this.getAll().indexOf(name);
+  return this.getCommands().indexOf(name);
 };

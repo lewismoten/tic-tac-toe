@@ -8,15 +8,15 @@ describe("TicTacToeStrategy", function() {
   
   describe("add", function() {
     it("does not throw", function() {
-      var countBeforeAdd = strategy.getAll().length;
+      var countBeforeAdd = strategy.getCommands().length;
       strategy.add("test");
-      expect(strategy.getAll().length).toEqual(countBeforeAdd + 1);
+      expect(strategy.getCommands().length).toEqual(countBeforeAdd + 1);
     });
     
     it("can be retrieved", function() {
       var name = "my test strategy";
       strategy.add(name);
-      var priorities = strategy.getAll();
+      var priorities = strategy.getCommands();
       expect(priorities.indexOf(name)).not.toEqual(-1);
     });
   });
@@ -52,13 +52,13 @@ describe("TicTacToeStrategy", function() {
     });
 
     it("takes an empty side last", function() {
-      expect(strategy.priorityOf("take empty side")).toEqual(strategy.getAll().length - 1);
+      expect(strategy.priorityOf("take empty side")).toEqual(strategy.getCommands().length - 1);
     });
   });
   
   it("can get all strategies", function() {
     strategy.add("test");
-    var directions = strategy.getAll();
+    var directions = strategy.getCommands();
     expect(directions.length).toBeGreaterThan(0);
   });
 });
