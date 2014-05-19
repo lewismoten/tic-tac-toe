@@ -22,11 +22,16 @@ describe("TicTacToeStrategy", function() {
   });
 
   describe("default priorities", function() {
-    it("has win before block", function() {
-      expect(strategy.priorityOf("win")).toBeLessThan(strategy.priorityOf("block"));
+
+    it("wins before blocking opponent", function() {
+      expect(strategy.priorityOf("win")).toBeLessThan(strategy.priorityOf("block win"));
     });
-    it("has block before fork", function() {
-      expect(strategy.priorityOf("block")).toBeLessThan(strategy.priorityOf("fork"));
+
+    it("blocks opponent before it forks", function() {
+      expect(strategy.priorityOf("block win")).toBeLessThan(strategy.priorityOf("fork"));
+    });
+    it("forks before blocking opponents fork", function() {
+      expect(strategy.priorityOf("fork")).toBeLessThan(strategy.priorityOf("block fork"));
     });
   });
   

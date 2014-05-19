@@ -10,8 +10,9 @@ function TicTacToeStrategy() {
   };
 
   this.add("win");
-  this.add("block");
+  this.add("block win");
   this.add("fork");
+  this.add("block fork");
 }
 
 TicTacToeStrategy.prototype.priorityOf = function(name) {
