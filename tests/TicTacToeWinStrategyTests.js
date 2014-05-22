@@ -5,5 +5,8 @@ describe("TicTacToeWinStrategy", function() {
   beforeEach(function() {
     strategy = new TicTacToeWinStrategy();
   });
-  
+
+  it("has correct name", function(){
+    expect(strategy.getName().equalTo("win"));
+  });
 });
