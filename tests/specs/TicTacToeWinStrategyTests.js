@@ -13,4 +13,9 @@ describe("TicTacToeWinStrategy", function() {
   it("does not have an initial move", function(){
     expect(strategy.getMove()).toBeNull();
   });
+
+  it("can play", function(){
+    expect(strategy.play()).toEqual(true);
+  });
+
 });
