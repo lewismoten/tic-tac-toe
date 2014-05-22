@@ -7,6 +7,6 @@ describe("TicTacToeWinStrategy", function() {
   });
 
   it("has correct name", function(){
-    expect(strategy.getName().equalTo("win"));
+    expect(strategy.getName()).toEqual("Win");
   });
 });
