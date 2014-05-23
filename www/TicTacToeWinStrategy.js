@@ -3,7 +3,7 @@ function TicTacToeWinStrategy() {
   this.play = function() {
     var decision = {
         canAct: true,
-        action: { }
+        action: { x: null, y: null }
       };
     return decision;
   };

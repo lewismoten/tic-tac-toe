@@ -20,8 +20,18 @@ describe("TicTacToeWinStrategy", function() {
     expect(decision.canAct).toEqual(true);
   });
 
-  it("will provide movement details for a decision", function(){
+  it("has action for an actionable decision", function(){
     var decision = strategy.play();
     expect(decision.action).not.toBeNull();
+  });
+  
+  it("has x coordinate for an action", function(){
+    var decision = strategy.play();
+    expect(decision.action.x).toBeDefined();
+  });
+
+  it("has y coordinate for an action", function(){
+    var decision = strategy.play();
+    expect(decision.action.y).toBeDefined();
   });
 });
