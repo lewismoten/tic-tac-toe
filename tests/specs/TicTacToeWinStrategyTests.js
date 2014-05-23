@@ -25,13 +25,22 @@ describe("TicTacToeWinStrategy", function() {
     expect(decision.action).not.toBeNull();
   });
   
-  it("has x coordinate for an action", function(){
+  it("has action.column", function(){
     var decision = strategy.play();
-    expect(decision.action.x).toBeDefined();
+    expect(decision.action.column).toBeDefined();
   });
 
-  it("has y coordinate for an action", function(){
+  it("has action.row", function(){
     var decision = strategy.play();
-    expect(decision.action.y).toBeDefined();
+    expect(decision.action.row).toBeDefined();
   });
+
+  it("completes a row", function(){
+    var board = new TicTacToeBoard();
+    board.importPlay(1425);
+    var decision = strategy.play(board);
+    expect(decision.action.column).toEqual(3);
+    expect(decision.action.row).toEqual(1);
+  });
+  
 });
