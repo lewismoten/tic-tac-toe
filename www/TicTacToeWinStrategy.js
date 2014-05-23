@@ -1,5 +1,10 @@
 function TicTacToeWinStrategy() {
   this.getName = function() { return "Win"; };
-  this.getMove = function() { return null; };
-  this.play = function() { return true; };
+  this.play = function() {
+    var decision = {
+        canAct: true,
+        action: { }
+      };
+    return decision;
+  };
 }

@@ -10,12 +10,18 @@ describe("TicTacToeWinStrategy", function() {
     expect(strategy.getName()).toEqual("Win");
   });
   
-  it("does not have an initial move", function(){
-    expect(strategy.getMove()).toBeNull();
+  it("can come to a decision", function(){
+    var decision = strategy.play();
+    expect(decision).not.toBeNull();
+  });
+  
+  it("can act on a decision", function(){
+    var decision = strategy.play();
+    expect(decision.canAct).toEqual(true);
   });
 
-  it("can play", function(){
-    expect(strategy.play()).toEqual(true);
+  it("will provide movement details for a decision", function(){
+    var decision = strategy.play();
+    expect(decision.action).not.toBeNull();
   });
-
 });
