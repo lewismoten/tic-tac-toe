@@ -9,16 +9,31 @@ function TicTacToeStrategy() {
     return strategies;
   };
 
-  this.add("win");
-  this.add("block win");
-  this.add("fork");
-  this.add("block fork");
-  this.add("take center");
-  this.add("take opponents opposite corner");
-  this.add("take empty corner");
-  this.add("take empty side");
+  this.add(new TicTacToeWinStrategy());
+  this.add(new TicTacToeBaseStrategy("block win"));
+  this.add(new TicTacToeBaseStrategy("fork"));
+  this.add(new TicTacToeBaseStrategy("block fork"));
+  this.add(new TicTacToeBaseStrategy("take center"));
+  this.add(new TicTacToeBaseStrategy("take opponents opposite corner"));
+  this.add(new TicTacToeBaseStrategy("take empty corner"));
+  this.add(new TicTacToeBaseStrategy("take empty side"));
 }
 
 TicTacToeStrategy.prototype.priorityOf = function(name) {
-  return this.getCommands().indexOf(name);
+  var strategies = this.getCommands();
+  for(i = 0; i < strategies.length; i++) {
+    if(strategies[i].getName() === name) {
+      return i;
+    }
+  }
+
+  return -1;
 };
+
+TicTacToeStrategy.prototype.hasStrategy = function(name) {
+  return this.priorityOf(name) != -1;
+};
+
+function TicTacToeBaseStrategy(name) {
+  this.getName = function() { return name; };
+}

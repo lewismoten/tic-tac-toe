@@ -21,10 +21,18 @@ describe("TicTacToeStrategy", function() {
     });
   });
 
+  describe("strategies", function() {
+    it("has win", function(){
+      var name = new TicTacToeWinStrategy().getName();
+      expect(strategy.hasStrategy(name)).toEqual(true);
+    });
+  });
+
   describe("default priorities", function() {
+    var winName = new TicTacToeWinStrategy().getName();
 
     it("wins before blocking opponent", function() {
-      expect(strategy.priorityOf("win")).toBeLessThan(strategy.priorityOf("block win"));
+      expect(strategy.priorityOf(winName)).toBeLessThan(strategy.priorityOf("block win"));
     });
 
     it("blocks opponent before it forks", function() {
