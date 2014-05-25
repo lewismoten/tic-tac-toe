@@ -66,21 +66,11 @@ TicTacToeBoard.prototype.getIndex = function(x, y){
 };
 
 TicTacToeBoard.prototype.getPosition = function(cell){
-  var x = -1;
-  var y = -1;
-  switch(cell)
-  {
-    case "1": x = 0; y = 0; break;
-    case "2": x = 1; y = 0; break;
-    case "3": x = 2; y = 0; break;
-    case "4": x = 0; y = 1; break;
-    case "5": x = 1; y = 1; break;
-    case "6": x = 2; y = 1; break;
-    case "7": x = 0; y = 2; break;
-    case "8": x = 1; y = 2; break;
-    case "9": x = 2; y = 2; break;
+  if(cell < 1 || cell > 9 || Math.floor(cell) != cell) {
+    throw new Error();
   }
-  if(x == -1 || y == -1) throw new Error("can not find cell for " + marks[i]);
+  var x = (cell - 1) % 3;
+  var y = ((cell - 1) - x) / 3;
   return {x: x, y: y, column: x + 1, row: y + 1};
 };
 
@@ -101,10 +91,10 @@ TicTacToeBoard.prototype.hasWinner = function() {
 };
 
 TicTacToeBoard.prototype.toString = function() {
-  sb = "[";
-  for(x = 0; x < 3; x++) {
+  var sb = "[";
+  for(var x = 0; x < 3; x++) {
     if(x !== 0) sb += "|";
-    for(y = 0; y < 3; y++) {
+    for(var y = 0; y < 3; y++) {
       sb += this.at(y, x);
     }
   }
