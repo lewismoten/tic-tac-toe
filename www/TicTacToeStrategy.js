@@ -1,10 +1,10 @@
 function TicTacToeStrategy() {
   var strategies = [];
-  
+
   this.add = function(name) {
     strategies.push(name);
   };
-  
+
   this.getCommands = function() {
     return strategies;
   };

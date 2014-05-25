@@ -123,7 +123,7 @@ describe("TicTacToeWinStrategy", function() {
           it("/ top", function() { expectAction(5678, 3, 1); });
           it("/ middle", function() { expectAction(7832, 2, 2); });
           it("/ bottom", function() { expectAction(3256, 1, 3); });
-          
+
           it("\\ top", function() { expectAction(5698, 1, 1); });
           it("\\ middle", function() { expectAction(1298, 2, 2); });
           it("\\ bottom", function() { expectAction(1256, 3, 3); });

@@ -1,18 +1,18 @@
 describe("TicTacToeStrategy", function() {
 
   var strategy;
-  
+
   beforeEach(function() {
     strategy = new TicTacToeStrategy();
   });
-  
+
   describe("add", function() {
     it("does not throw", function() {
       var countBeforeAdd = strategy.getCommands().length;
       strategy.add("test");
       expect(strategy.getCommands().length).toEqual(countBeforeAdd + 1);
     });
-    
+
     it("can be retrieved", function() {
       var name = "my test strategy";
       strategy.add(name);
@@ -38,15 +38,15 @@ describe("TicTacToeStrategy", function() {
     it("blocks opponent before it forks", function() {
       expect(strategy.priorityOf("block win")).toBeLessThan(strategy.priorityOf("fork"));
     });
-    
+
     it("forks before blocking opponents fork", function() {
       expect(strategy.priorityOf("fork")).toBeLessThan(strategy.priorityOf("block fork"));
     });
-    
+
     it("block opponents fork before taking center", function() {
       expect(strategy.priorityOf("block fork")).toBeLessThan(strategy.priorityOf("take center"));
     });
-    
+
     it("takes center before taking an opponents opposite corner", function() {
       expect(strategy.priorityOf("take center")).toBeLessThan(strategy.priorityOf("take opponents opposite corner"));
     });
@@ -63,7 +63,7 @@ describe("TicTacToeStrategy", function() {
       expect(strategy.priorityOf("take empty side")).toEqual(strategy.getCommands().length - 1);
     });
   });
-  
+
   it("can get all strategies", function() {
     strategy.add("test");
     var directions = strategy.getCommands();

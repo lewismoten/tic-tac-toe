@@ -1,7 +1,7 @@
 function TicTacToeAi() {
   var ai = this;
   var rows = ["123", "456", "789", "147", "258", "369", "159", "357"];
-  
+
   var getStrategy = function() {
     return [
       gameOverStrategy,
@@ -12,33 +12,33 @@ function TicTacToeAi() {
   };
 
   this.play = function(board) {
-    
+
     var strategies = getStrategy();
 
     for(i = 0; i < strategies.length; i++) {
       var move = strategies[i](board);
       if(move !== null) return move;
     }
-    
+
     return {x: 1, y: 0};
   };
-  
+
   var gameOverStrategy = function(board) {
     if(board.isGameOver()) throw new Error();
     return null;
   };
-  
+
   var winStrategy = function(board) {
     for(var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
       var row = rows[rowIndex] + "";
-      
+
       var myCount = 0;
       var myWin = -1;
-      
+
       for(cellIndex = 0; cellIndex < row.length; cellIndex++)
       {
         var cell = row[cellIndex];
-        
+
         if(isMeAt(board, cell)) {
           myCount++;
         }
@@ -49,7 +49,7 @@ function TicTacToeAi() {
           break;
         }
       }
-      
+
       if(myCount == 2 && myWin != -1) {
         return ai.cellToCoordinates(myWin);
       }
@@ -60,14 +60,14 @@ function TicTacToeAi() {
   var blockWinStrategy = function(board) {
     for(var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
       var row = rows[rowIndex] + "";
-      
+
       var opponentCount = 0;
       var myBlock = -1;
-      
+
       for(cellIndex = 0; cellIndex < row.length; cellIndex++)
       {
         var cell = row[cellIndex];
-        
+
         if(isMeAt(board, cell)) {
           break;
         }
@@ -78,14 +78,14 @@ function TicTacToeAi() {
           opponentCount++;
         }
       }
-      
+
       if(opponentCount == 2 && myBlock != -1) {
         return ai.cellToCoordinates(myBlock);
       }
     }
     return null;
   };
-  
+
   var forkStrategy = function(board) {
     for(var i = 0; i < rows.length; i++) {
       if(isMeInRow(board, rows[i]) && isEmptyInRow(board, rows[i] && !isOpponentInRow(board, rows[i]))) {
@@ -100,10 +100,10 @@ function TicTacToeAi() {
         }
       }
     }
-    
+
     return null;
   };
-  
+
   var overlap = function(row1, row2) {
     for(var i = 0; i < row1.length; i++) {
       if(row2.indexOf(row1[i]) !== -1) {
@@ -130,7 +130,7 @@ function TicTacToeAi() {
     }
     return false;
   };
-  
+
   var isMeInRow = function(board, row) {
     for(var i = 0; i < row.length; i++) {
       if(isMeAt(board, row[i])) {
@@ -139,16 +139,16 @@ function TicTacToeAi() {
     }
     return false;
   };
-  
+
   var isOpponentAt = function(board, cell) {
     return !(isMeAt(board, cell) || isEmptyAt(board, cell));
   };
-  
+
   var isMeAt = function(board, cell) {
     var position = ai.cellToCoordinates(cell);
     return board.at(position.x, position.y) == board.getPlayer();
   };
-  
+
   var isEmptyAt = function(board, cell) {
     var position = ai.cellToCoordinates(cell);
     return board.at(position.x, position.y) == board.noPlayerToken;
@@ -174,4 +174,3 @@ TicTacToeAi.prototype.cellToCoordinates = function(cell) {
     if(x == -1 || y == -1) throw new Error("can not find cell for cell " + cell);
     return { x: x, y: y };
   };
-
