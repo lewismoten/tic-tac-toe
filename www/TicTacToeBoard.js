@@ -1,12 +1,12 @@
 function TicTacToeBoard() {
-  
+
   var player = 1;
   var board = this;
   var winner = 0;
   var winningScenarios = [0x07,0x38,0x49,0x54,0x92,0x0111,0x124,0x01C0];
   var firstPlayerMarks = 0;
   var secondPlayerMarks = 0;
-  
+
   this.firstPlayerToken = "X";
   this.secondPlayerToken = "O";
   this.noPlayerToken = " ";
@@ -21,7 +21,7 @@ function TicTacToeBoard() {
     var second = (secondPlayerMarks & i) == i;
     return playerToken(first, second);
   };
-  
+
   var playerToken = function(isFirst, isSecond) {
     return isFirst ? board.firstPlayerToken : isSecond ? board.secondPlayerToken : board.noPlayerToken;
   };
@@ -30,7 +30,7 @@ function TicTacToeBoard() {
     var i = board.getIndex(x, y);
     if(player == 1) firstPlayerMarks |= i; else secondPlayerMarks |= i;
   };
-  
+
   var discoverWinner = function() {
     for(var i = 0; i < winningScenarios.length; i++) {
       var scenario = winningScenarios[i];
@@ -43,11 +43,11 @@ function TicTacToeBoard() {
     }
     return 0;
   };
-  
+
   var setNextPlayer = function() {
     player *= board.isGameOver() ? 0 : -1;
   };
-  
+
   this.mark = function(x, y) {
     if(winner !== 0) return false;
     if(this.isMarked(x, y)) return false;
@@ -63,6 +63,25 @@ TicTacToeBoard.prototype.getIndex = function(x, y){
     throw new Error();
   }
   return 1 << (8 - ((y*3)+x));
+};
+
+TicTacToeBoard.prototype.getPosition = function(cell){
+  var x = -1;
+  var y = -1;
+  switch(cell)
+  {
+    case "1": x = 0; y = 0; break;
+    case "2": x = 1; y = 0; break;
+    case "3": x = 2; y = 0; break;
+    case "4": x = 0; y = 1; break;
+    case "5": x = 1; y = 1; break;
+    case "6": x = 2; y = 1; break;
+    case "7": x = 0; y = 2; break;
+    case "8": x = 1; y = 2; break;
+    case "9": x = 2; y = 2; break;
+  }
+  if(x == -1 || y == -1) throw new Error("can not find cell for " + marks[i]);
+  return {x: x, y: y, column: x + 1, row: y + 1};
 };
 
 TicTacToeBoard.prototype.isFull = function() {
@@ -93,26 +112,22 @@ TicTacToeBoard.prototype.toString = function() {
   return sb;
 };
 
+TicTacToeBoard.prototype.isPlayerAt = function(cell) {
+  var position = this.getPosition(cell);
+  return this.at(position.x, position.y) == this.getPlayer();
+};
+
+TicTacToeBoard.prototype.isEmptyAt = function(cell) {
+  var position = this.getPosition(cell);
+  return this.at(position.x, position.y) == this.noPlayerToken;
+};
+
 TicTacToeBoard.prototype.importPlay = function(marks) {
   marks += "";
   for(var i = 0; i < marks.length; i++)
   {
-    var x = -1;
-    var y = -1;
-    switch(marks[i])
-    {
-      case "1": x = 0; y = 0; break;
-      case "2": x = 1; y = 0; break;
-      case "3": x = 2; y = 0; break;
-      case "4": x = 0; y = 1; break;
-      case "5": x = 1; y = 1; break;
-      case "6": x = 2; y = 1; break;
-      case "7": x = 0; y = 2; break;
-      case "8": x = 1; y = 2; break;
-      case "9": x = 2; y = 2; break;
-    }
-    if(x == -1 || y == -1) throw new Error("can not find cell for " + marks[i]);
-    var marked = this.mark(x, y);
+    var position = this.getPosition(marks[i]);
+    var marked = this.mark(position.x, position.y);
     if(!marked) throw new Error("Could not mark cell for " + marks[i]);
   }
 };
