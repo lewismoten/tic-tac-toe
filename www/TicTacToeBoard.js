@@ -59,16 +59,17 @@ function TicTacToeBoard() {
 }
 
 TicTacToeBoard.prototype.getIndex = function(x, y){
-  if(x < 0 || x > 2 || y < 0 || y > 2) {
-    throw new Error();
-  }
+  if(x < 0) throw new Error("Parameter x less than zero");
+  if(x > 2) throw new Error("Parameter x greater than two");
+  if(y < 0) throw new Error("Parameter y less than zero");
+  if(y > 2) throw new Error("Parameter y greater than two");
   return 1 << (8 - ((y*3)+x));
 };
 
 TicTacToeBoard.prototype.getPosition = function(cell){
-  if(cell < 1 || cell > 9 || Math.floor(cell) != cell) {
-    throw new Error();
-  }
+  if(cell < 1) throw new Error("Parameter cell less than one");
+  if(cell > 9) throw new Error("Parameter cell greater than nine");
+  if(cell != Math.floor(cell)) throw new Error("Parameter cell is a fraction");
   var x = (cell - 1) % 3;
   var y = ((cell - 1) - x) / 3;
   return {x: x, y: y, column: x + 1, row: y + 1};
