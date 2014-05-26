@@ -10,7 +10,7 @@ function TicTacToeStrategy() {
   };
 
   this.add(new TicTacToeWinStrategy());
-  this.add(new TicTacToeBaseStrategy("block win"));
+  this.add(new TicTacToeBlockWinStrategy());
   this.add(new TicTacToeBaseStrategy("fork"));
   this.add(new TicTacToeBaseStrategy("block fork"));
   this.add(new TicTacToeBaseStrategy("take center"));
@@ -21,7 +21,7 @@ function TicTacToeStrategy() {
 
 TicTacToeStrategy.prototype.priorityOf = function(name) {
   var strategies = this.getCommands();
-  for(i = 0; i < strategies.length; i++) {
+  for(var i = 0; i < strategies.length; i++) {
     if(strategies[i].getName() === name) {
       return i;
     }

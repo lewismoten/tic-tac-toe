@@ -102,6 +102,10 @@ TicTacToeBoard.prototype.toString = function() {
   return sb;
 };
 
+TicTacToeBoard.prototype.isOpponentAt = function(cell) {
+  return !(this.isPlayerAt(cell)  || this.isEmptyAt(cell));
+};
+
 TicTacToeBoard.prototype.isPlayerAt = function(cell) {
   var position = this.getPosition(cell);
   return this.at(position.x, position.y) == this.getPlayer();

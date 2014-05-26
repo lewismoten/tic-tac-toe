@@ -1,5 +1,6 @@
 var strategy;
 var winName = new TicTacToeWinStrategy().getName();
+var blockWinName = new TicTacToeBlockWinStrategy().getName();
 
 module( "Strategy", {
   setup: function() {
@@ -24,12 +25,16 @@ test("has win", function() {
   ok(strategy.hasStrategy(winName));
 });
 
+test("has block win", function() {
+  ok(strategy.hasStrategy(blockWinName));
+});
+
 test("wins before blocking opponent", function() {
-  ok(strategy.priorityOf(winName) < strategy.priorityOf("block win"));
+  ok(strategy.priorityOf(winName) < strategy.priorityOf(blockWinName));
 });
 
 test("blocks opponent before it forks", function() {
-  ok(strategy.priorityOf("block win") < strategy.priorityOf("fork"));
+  ok(strategy.priorityOf(blockWinName) < strategy.priorityOf("fork"));
 });
 
 test("forks before blocking opponents fork", function() {

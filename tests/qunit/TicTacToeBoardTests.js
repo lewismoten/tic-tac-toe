@@ -323,3 +323,8 @@ test("isPlayerAt does not match other player", function() {
   board.importPlay(12);
   equal(board.isPlayerAt(2), false);
 });
+
+test("isOpponentAt matches previous player", function() {
+  board.importPlay(1);
+  ok(board.isOpponentAt(1));
+});
