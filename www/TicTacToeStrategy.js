@@ -13,7 +13,7 @@ function TicTacToeStrategy() {
   this.add(new TicTacToeBlockWinStrategy());
   this.add(new TicTacToeBaseStrategy("fork"));
   this.add(new TicTacToeBaseStrategy("block fork"));
-  this.add(new TicTacToeBaseStrategy("take center"));
+  this.add(new TicTacToeTakeCenterStrategy());
   this.add(new TicTacToeBaseStrategy("take opponents opposite corner"));
   this.add(new TicTacToeBaseStrategy("take empty corner"));
   this.add(new TicTacToeBaseStrategy("take empty side"));
