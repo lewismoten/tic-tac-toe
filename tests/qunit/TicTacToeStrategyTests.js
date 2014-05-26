@@ -4,6 +4,7 @@ var blockWinName = new TicTacToeBlockWinStrategy().getName();
 var takeCenterName = new TicTacToeTakeCenterStrategy().getName();
 var takeOppositeCornerName = new TicTacToeTakeOppositeCornerStrategy().getName();
 var takeCornerName = new TicTacToeTakeCornerStrategy().getName();
+var takeSideName = new TicTacToeTakeSideStrategy().getName();
 
 module( "Strategy", {
   setup: function() {
@@ -40,6 +41,10 @@ test("has take corner", function() {
   ok(strategy.hasStrategy(takeCornerName));
 });
 
+test("has take side", function() {
+  ok(strategy.hasStrategy(takeSideName));
+});
+
 test("has take opposite corner", function() {
   ok(strategy.hasStrategy(takeOppositeCornerName));
 });
@@ -69,11 +74,11 @@ test("takes opponents opposite corner before taking an empty corner", function()
 });
 
 test("takes an empty corner before taking a side", function() {
-  ok(strategy.priorityOf(takeCornerName) < strategy.priorityOf("take empty side"));
+  ok(strategy.priorityOf(takeCornerName) < strategy.priorityOf(takeSideName));
 });
 
 test("takes an empty side last", function() {
-  equal(strategy.priorityOf("take empty side"), strategy.getCommands().length - 1);
+  equal(strategy.priorityOf(takeSideName), strategy.getCommands().length - 1);
 });
 
 test("does not have unknown strategy", function() {

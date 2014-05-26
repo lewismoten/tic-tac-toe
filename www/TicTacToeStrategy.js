@@ -16,7 +16,7 @@ function TicTacToeStrategy() {
   this.add(new TicTacToeTakeCenterStrategy());
   this.add(new TicTacToeTakeOppositeCornerStrategy());
   this.add(new TicTacToeTakeCornerStrategy());
-  this.add(new TicTacToeBaseStrategy("take empty side"));
+  this.add(new TicTacToeTakeSideStrategy());
 }
 
 TicTacToeStrategy.prototype.priorityOf = function(name) {
