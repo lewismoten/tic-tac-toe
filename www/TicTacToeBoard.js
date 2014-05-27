@@ -11,10 +11,27 @@ function TicTacToeBoard() {
   this.secondPlayerToken = "O";
   this.noPlayerToken = " ";
 
-  this.marks = function() { return firstPlayerMarks | secondPlayerMarks; };
-  this.getPlayer = function() { return playerToken(player === 1, player === -1); };
-  this.getWinner = function() { return playerToken(winner === 1, winner === -1); };
-  this.isMarked = function(x, y) { var i = this.getIndex(x, y); return (this.marks() & i) == i; };
+  this.marks = function() {
+    return firstPlayerMarks | secondPlayerMarks;
+  };
+
+  this.getPlayer = function() {
+    return playerToken(player === 1, player === -1);
+  };
+
+  this.getOpponent = function() {
+    return playerToken(player === -1, player === 1);
+  };
+
+  this.getWinner = function() {
+    return playerToken(winner === 1, winner === -1);
+  };
+
+  this.isMarked = function(x, y) {
+    var i = this.getIndex(x, y);
+    return (this.marks() & i) == i;
+  };
+
   this.at = function(x, y) {
     var i = this.getIndex(x, y);
     var first = (firstPlayerMarks & i) == i;
@@ -23,12 +40,20 @@ function TicTacToeBoard() {
   };
 
   var playerToken = function(isFirst, isSecond) {
-    return isFirst ? board.firstPlayerToken : isSecond ? board.secondPlayerToken : board.noPlayerToken;
+    return isFirst ?
+      board.firstPlayerToken
+      : isSecond ?
+        board.secondPlayerToken
+        : board.noPlayerToken;
   };
 
   var applyMark = function(x, y) {
     var i = board.getIndex(x, y);
-    if(player == 1) firstPlayerMarks |= i; else secondPlayerMarks |= i;
+    if(player == 1) {
+      firstPlayerMarks |= i;
+    } else {
+      secondPlayerMarks |= i;
+    }
   };
 
   var discoverWinner = function() {
@@ -49,8 +74,14 @@ function TicTacToeBoard() {
   };
 
   this.mark = function(x, y) {
-    if(winner !== 0) return false;
-    if(this.isMarked(x, y)) return false;
+    if(winner !== 0) {
+      return false;
+    }
+
+    if(this.isMarked(x, y)) {
+      return false
+    };
+
     applyMark(x, y);
     winner = discoverWinner();
     setNextPlayer();
@@ -59,17 +90,40 @@ function TicTacToeBoard() {
 }
 
 TicTacToeBoard.prototype.getIndex = function(x, y){
-  if(x < 0) throw new Error("Parameter x less than zero");
-  if(x > 2) throw new Error("Parameter x greater than two");
-  if(y < 0) throw new Error("Parameter y less than zero");
-  if(y > 2) throw new Error("Parameter y greater than two");
+
+  if(x < 0) {
+    throw new Error("Parameter x less than zero");
+  }
+
+  if(x > 2) {
+    throw new Error("Parameter x greater than two");
+  }
+
+  if(y < 0) {
+    throw new Error("Parameter y less than zero");
+  }
+
+  if(y > 2) {
+    throw new Error("Parameter y greater than two");
+  }
+
   return 1 << (8 - ((y*3)+x));
 };
 
 TicTacToeBoard.prototype.getPosition = function(cell){
-  if(cell < 1) throw new Error("Parameter cell less than one");
-  if(cell > 9) throw new Error("Parameter cell greater than nine");
-  if(cell != Math.floor(cell)) throw new Error("Parameter cell is a fraction");
+
+  if(cell < 1) {
+    throw new Error("Parameter cell less than one");
+  }
+
+  if(cell > 9) {
+    throw new Error("Parameter cell greater than nine")
+  };
+
+  if(cell != Math.floor(cell)) {
+    throw new Error("Parameter cell is a fraction");
+  }
+
   var x = (cell - 1) % 3;
   var y = ((cell - 1) - x) / 3;
   return {x: x, y: y, column: x + 1, row: y + 1};
@@ -85,6 +139,18 @@ TicTacToeBoard.prototype.isEmpty = function() {
 
 TicTacToeBoard.prototype.isGameOver = function() {
   return this.hasWinner() || this.isFull();
+};
+
+TicTacToeBoard.prototype.getMarks = function(cells) {
+  cells += "";
+  var sb = "";
+  for(var i = 0; i < cells.length; i++)
+  {
+    var position = this.getPosition(cells[i]);
+    sb += this.at(position.x, position.y);
+  }
+
+  return sb;
 };
 
 TicTacToeBoard.prototype.hasWinner = function() {
@@ -123,6 +189,8 @@ TicTacToeBoard.prototype.importPlay = function(marks) {
   {
     var position = this.getPosition(marks[i]);
     var marked = this.mark(position.x, position.y);
-    if(!marked) throw new Error("Could not mark cell for " + marks[i]);
+    if(!marked) {
+      throw new Error("Could not mark cell for " + marks[i]);
+    }
   }
 };
