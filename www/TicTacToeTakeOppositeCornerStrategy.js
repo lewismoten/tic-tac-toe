@@ -1,9 +1,14 @@
 function TicTacToeTakeOppositeCornerStrategy() {
 
-  this.getName = function() { return "Take Opposite Corner"; };
+  var base = new TicTacToeBaseStrategy();
+
+  this.getName = function() {
+    return "Take Opposite Corner";
+  };
+
   this.play = function(board) {
-    if(arguments.length != 1) throw new Error("Unexpected number of arguments provided");
-    if(board == null) throw new Error("Argument can not be null");
+
+    base.validatePlayArguments(arguments);
 
     var decision = {
         canAct: false,

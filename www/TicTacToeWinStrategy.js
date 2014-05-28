@@ -1,19 +1,22 @@
 function TicTacToeWinStrategy() {
 
-  var rows = ["123", "456", "789", "147", "258", "369", "159", "357"];
+  var base = new TicTacToeBaseStrategy();
 
-  this.getName = function() { return "Win"; };
+  this.getName = function() {
+    return "Win";
+  };
+
   this.play = function(board) {
-    if(arguments.length != 1) throw new Error("Unexpected number of arguments provided");
-    if(board == null) throw new Error("Argument can not be null");
+
+    base.validatePlayArguments(arguments);
 
     var decision = {
         canAct: false,
         action: null
       };
 
-    for(var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
-      var row = rows[rowIndex];
+    for(var rowIndex = 0; rowIndex < base.rows.length; rowIndex++) {
+      var row = base.rows[rowIndex];
       var myCount = 0;
       var myWin = -1;
 

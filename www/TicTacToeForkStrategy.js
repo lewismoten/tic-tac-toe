@@ -1,45 +1,36 @@
 function TicTacToeForkStrategy() {
 
-  var rows = ["123", "456", "789", "147", "258", "369", "159", "357"];
+  var base = new TicTacToeBaseStrategy();
 
   this.getName = function() {
     return "Fork";
   };
 
   this.play = function(board) {
-    if(arguments.length != 1) {
-      throw new Error("Unexpected number of arguments provided");
-    }
 
-    if(board == null) {
-      throw new Error("Argument can not be null");
-    }
+    base.validatePlayArguments(arguments);
 
     var decision = {
         canAct: false,
         action: null
       };
 
-    for(var i = 0; i < rows.length; i++) {
+    for(var i = 0; i < base.rows.length; i++) {
 
       if(
-        isMeInRow(board, rows[i])
-        && isEmptyInRow(board, rows[i])
-        && !isOpponentInRow(board, rows[i])
+        base.isMeInRow(board, base.rows[i])
+        && base.isEmptyInRow(board, base.rows[i])
+        && !base.isOpponentInRow(board, base.rows[i])
         ) {
-        for(var j = 0; j < rows.length; j++) {
-
-          if(j === i) {
-            continue;
-          }
+        for(var j = i + 1; j < base.rows.length; j++) {
 
           if(
-            isMeInRow(board, rows[j])
-            && isEmptyInRow(board, rows[j])
-            && !isOpponentInRow(board, rows[j])
+            base.isMeInRow(board, base.rows[j])
+            && base.isEmptyInRow(board, base.rows[j])
+            && !base.isOpponentInRow(board, base.rows[j])
             ) {
 
-            var cell = board.overlappingCell(rows[i], rows[j]);
+            var cell = board.overlappingCell(base.rows[i], base.rows[j]);
 
             if(cell === null) {
               continue;
@@ -57,17 +48,5 @@ function TicTacToeForkStrategy() {
     }
 
     return decision;
-  };
-
-  var isOpponentInRow = function(board, row) {
-    return board.getMarks(row).indexOf(board.getOpponent()) !== -1;
-  };
-
-  var isMeInRow = function(board, row) {
-    return board.getMarks(row).indexOf(board.getPlayer()) !== -1;
-  };
-
-  var isEmptyInRow = function(board, row) {
-    return board.getMarks(row).indexOf(board.noPlayerToken) !== -1;
   };
 }
