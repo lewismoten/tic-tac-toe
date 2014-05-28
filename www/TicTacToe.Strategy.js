@@ -9,6 +9,21 @@ function TicTacToeStrategy() {
     return strategies;
   };
 
+  this.play = function(board) {
+    for(var i = 0; i < strategies.length; i++) {
+      var decision = strategies[i].play(board);
+      if(decision.canAct) {
+        return decision;
+      }
+    }
+
+    return decision = {
+      canAct: false,
+      action: null
+    };
+
+  };
+
   this.add(new TicTacToeWinStrategy());
   this.add(new TicTacToeBlockWinStrategy());
   this.add(new TicTacToeForkStrategy());

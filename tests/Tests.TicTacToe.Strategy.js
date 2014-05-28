@@ -1,4 +1,6 @@
 var strategy;
+var board;
+
 var winName = new TicTacToeWinStrategy().getName();
 var blockWinName = new TicTacToeBlockWinStrategy().getName();
 var takeCenterName = new TicTacToeTakeCenterStrategy().getName();
@@ -11,6 +13,7 @@ var blockForkName = new TicTacToeBlockForkStrategy().getName();
 module( "Strategy", {
   setup: function() {
     strategy = new TicTacToeStrategy();
+    board = new TicTacToeBoard();
   }
 });
 
@@ -99,4 +102,17 @@ test("can get all strategies", function() {
   strategy.add("test");
   var directions = strategy.getCommands();
   ok(directions.length > 0);
+});
+
+test("can play", function() {
+  var decision = strategy.play(board);
+  ok(decision.canAct);
+});
+
+test("can not win", function() {
+    while(!board.isGameOver()) {
+      var decision = strategy.play(board);
+      board.mark(decision.action.x, decision.action.y);
+    };
+    equal(board.hasWinner(), false, "Unbeatable AI never wins: " + board.toString());
 });
