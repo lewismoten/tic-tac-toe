@@ -1,32 +1,35 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>Jasmine Spec Runner v2.0.0</title>
-
-  <link rel="shortcut icon" type="image/png" href="../jasmine/lib/jasmine-2.0.0/jasmine_favicon.png">
-  <link rel="stylesheet" type="text/css" href="../jasmine/lib/jasmine-2.0.0/jasmine.css">
-
-  <script type="text/javascript" src="../jasmine/lib/jasmine-2.0.0/jasmine.js"></script>
-  <script type="text/javascript" src="../jasmine/lib/jasmine-2.0.0/jasmine-html.js"></script>
-  <script type="text/javascript" src="../jasmine/lib/jasmine-2.0.0/boot.js"></script>
-
-  <!-- include source files here... -->
-  <script type="text/javascript" src="../www/TicTacToeAi.js"></script>
-  <script type="text/javascript" src="../www/TicTacToeBoard.js"></script>
-  <script type="text/javascript" src="../www/TicTacToeWinStrategy.js"></script>
-  <script type="text/javascript" src="../www/TicTacToeStrategy.js"></script>
-  <script type="text/javascript" src="../www/TicTacToe.js"></script>
-
-  <!-- include spec files here... -->
-  <script type="text/javascript" src="specs/TicTacToeWinStrategyTests.js"></script>
-  <script type="text/javascript" src="specs/TicTacToeStrategyTests.js"></script>
-  <script type="text/javascript" src="specs/TicTacToeBoardTests.js"></script>
-  <script type="text/javascript" src="specs/TicTacToeTests.js"></script>
-  <script type="text/javascript" src="specs/TicTacToeAiTests.js"></script>
-
+  <meta charset="utf-8">
+  <title>Unit Testing &amp; Test Coverage</title>
+  <link rel="stylesheet" href="../lib/qunit/qunit.css">
 </head>
-
 <body>
+  <div id="qunit"></div>
+  <div id="qunit-fixture"></div>
+  <script src="../lib/qunit/qunit.js"></script>
+  <script src="../lib/blanket/blanket.js"></script>
+  <script src="../lib/pavlov/pavlov.js"></script>
+
+  <script src="../www/TicTacToeBoard.js" data-cover></script>
+  <script src="../www/TicTacToeStrategy.js" data-cover></script>
+  <script src="../www/TicTacToeWinStrategy.js" data-cover></script>
+  <script src="../www/TicTacToeBlockWinStrategy.js" data-cover></script>
+  <script src="../www/TicTacToeForkStrategy.js" data-cover></script>
+  <script src="../www/TicTacToeTakeCenterStrategy.js" data-cover></script>
+  <script src="../www/TicTacToeTakeCornerStrategy.js" data-cover></script>
+  <script src="../www/TicTacToeTakeOppositeCornerStrategy.js" data-cover></script>
+  <script src="../www/TicTacToeTakeSideStrategy.js" data-cover></script>
+
+  <script src="TicTacToeBoardTests.js"></script>
+  <script src="TicTacToeStrategyTests.js"></script>
+  <script src="TicTacToeWinStrategyTests.js"></script>
+  <script src="TicTacToeBlockWinStrategyTests.js"></script>
+  <script src="TicTacToeForkStrategyTests.js"></script>
+  <script src="TicTacToeTakeCenterStrategyTests.js"></script>
+  <script src="TicTacToeTakeCornerStrategyTests.js"></script>
+  <script src="TicTacToeTakeOppositeCornerStrategyTests.js"></script>
+  <script src="TicTacToeTakeSideStrategyTests.js"></script>
 </body>
 </html>
