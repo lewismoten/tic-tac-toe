@@ -1,4 +1,4 @@
-pavlov.specify("Pavlov Example", function(){
+pavlov.specify("Fork Strategy", function(){
 
   describe("Fork Strategy", function() {
 
@@ -68,11 +68,10 @@ pavlov.specify("Pavlov Example", function(){
         assert(decision.action).isSameAs(board.getPosition(3));
       });
 
-
-      it("xx", function() {
-        board.importPlay(143576);
+      it("two rows with player and not opponent crossing returns no play", function() {
+        board.importPlay(1475);
         var decision = strategy.play(board);
-        assert(decision.action).isSameAs(board.getPosition(3));
+        equal(decision.canAct, false);
       });
     });
   });

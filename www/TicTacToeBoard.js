@@ -183,6 +183,18 @@ TicTacToeBoard.prototype.isEmptyAt = function(cell) {
   return this.at(position.x, position.y) == this.noPlayerToken;
 };
 
+TicTacToeBoard.prototype.overlappingCell = function(cells1, cells2) {
+  cells1 += "";
+  cells2 += "";
+  
+  for(var i = 0; i < cells1.length; i++) {
+    if(cells2.indexOf(cells1[i]) !== -1) {
+      return cells1[i];
+    }
+  }
+  return null;
+};
+
 TicTacToeBoard.prototype.importPlay = function(marks) {
   marks += "";
   for(var i = 0; i < marks.length; i++)

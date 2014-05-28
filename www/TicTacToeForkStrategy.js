@@ -39,7 +39,7 @@ function TicTacToeForkStrategy() {
             && !isOpponentInRow(board, rows[j])
             ) {
 
-            var cell = overlap(rows[i], rows[j]);
+            var cell = board.overlappingCell(rows[i], rows[j]);
 
             if(cell === null) {
               continue;
@@ -57,15 +57,6 @@ function TicTacToeForkStrategy() {
     }
 
     return decision;
-  };
-
-  var overlap = function(row1, row2) {
-    for(var i = 0; i < row1.length; i++) {
-      if(row2.indexOf(row1[i]) !== -1) {
-        return row1[i];
-      }
-    }
-    return null;
   };
 
   var isOpponentInRow = function(board, row) {

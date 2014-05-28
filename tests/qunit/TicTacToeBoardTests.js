@@ -8,8 +8,18 @@ module( "Board", {
   }
 });
 
+test("importPlay() throws error with invalid play", function() {
+  throws(function(){board.importPlay(11);});
+});
+
 test("starts with an empty board", function() {
   ok(board.isEmpty());
+});
+
+test("getMarks() returns marks for each cell requested in order", function() {
+  board.importPlay(1234);
+  var marks = board.getMarks(4412359);
+  equal(marks, "OOXOX  ");
 });
 
 test("starts with empty cells", function() {
@@ -18,8 +28,32 @@ test("starts with empty cells", function() {
   };
 });
 
-test("starts with first player", function() {
+test("overlappingCell() finds single instance of first match", function() {
+  equal(board.overlappingCell(11, 11), 1);
+});
+
+test("overlappingCell() finds only first cell matching between two sets", function() {
+  equal(board.overlappingCell(123, 123), 1);
+});
+
+test("overlappingCell() finds cell matching between two sets", function() {
+  equal(board.overlappingCell(3, 3), 3);
+});
+
+test("overlappingCell() finds cell matching between two sets of multiple values", function() {
+  equal(board.overlappingCell(123, 4567893), 3);
+});
+
+test("overlappingCell() non-matching cells return null", function() {
+  equal(board.overlappingCell(123, 456), null);
+});
+
+test("starts with first player as player", function() {
   equal(board.getPlayer(), board.firstPlayerToken);
+});
+
+test("starts with second player as opponent", function() {
+  equal(board.getOpponent(), board.secondPlayerToken);
 });
 
 test("starts without a winner", function() {
