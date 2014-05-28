@@ -12,7 +12,7 @@ function TicTacToeStrategy() {
   this.add(new TicTacToeWinStrategy());
   this.add(new TicTacToeBlockWinStrategy());
   this.add(new TicTacToeForkStrategy());
-  this.add(new TicTacToeBaseStrategy("block fork"));
+  this.add(new TicTacToeBlockForkStrategy());
   this.add(new TicTacToeTakeCenterStrategy());
   this.add(new TicTacToeTakeOppositeCornerStrategy());
   this.add(new TicTacToeTakeCornerStrategy());
@@ -33,7 +33,3 @@ TicTacToeStrategy.prototype.priorityOf = function(name) {
 TicTacToeStrategy.prototype.hasStrategy = function(name) {
   return this.priorityOf(name) != -1;
 };
-
-function TicTacToeBaseStrategy(name) {
-  this.getName = function() { return name; };
-}

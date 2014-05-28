@@ -6,6 +6,7 @@ var takeOppositeCornerName = new TicTacToeTakeOppositeCornerStrategy().getName()
 var takeCornerName = new TicTacToeTakeCornerStrategy().getName();
 var takeSideName = new TicTacToeTakeSideStrategy().getName();
 var forkName = new TicTacToeForkStrategy().getName();
+var blockForkName = new TicTacToeBlockForkStrategy().getName();
 
 module( "Strategy", {
   setup: function() {
@@ -32,6 +33,10 @@ test("has win", function() {
 
 test("has fork", function() {
   ok(strategy.hasStrategy(forkName));
+});
+
+test("has block fork", function() {
+  ok(strategy.hasStrategy(blockForkName));
 });
 
 test("has block win", function() {
@@ -63,11 +68,11 @@ test("blocks opponent before it forks", function() {
 });
 
 test("forks before blocking opponents fork", function() {
-  ok(strategy.priorityOf(forkName) < strategy.priorityOf("block fork"));
+  ok(strategy.priorityOf(forkName) < strategy.priorityOf(blockForkName));
 });
 
 test("block opponents fork before taking center", function() {
-  ok(strategy.priorityOf("block fork") < strategy.priorityOf(takeCenterName));
+  ok(strategy.priorityOf(blockForkName) < strategy.priorityOf(takeCenterName));
 });
 
 test("takes center before taking an opponents opposite corner", function() {
