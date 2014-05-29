@@ -10,21 +10,16 @@ function TicTacToeTakeSideStrategy() {
 
     base.validatePlayArguments(arguments);
 
-    var decision = {
-        canAct: false,
-        action: null
-      };
-
     var cells = [2,4,6,8];
     for(var i = 0; i < cells.length; i++) {
       var cell = cells[i];
       if(board.isEmptyAt(cell)) {
-        decision.canAct = true;
-        decision.action = board.getPosition(cell);
-        return decision;
+        return this.decision(board, cell);
       }
     }
 
-    return decision;
+    return this.noDecision();
   };
 }
+
+TicTacToeTakeSideStrategy.prototype = new TicTacToeBaseStrategy();

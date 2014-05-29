@@ -17,6 +17,15 @@ module( "Strategy", {
   }
 });
 
+test("decision has canAct", function() {
+  var commands = strategy.getCommands();
+  for(var i = 0; i < commands.length; i++) {
+    var command = commands[i];
+    var decision = command.play(board);
+    equal(decision.name, command.getName());
+  }
+});
+
 test("add does not throw", function() {
   var countBeforeAdd = strategy.getCommands().length;
   strategy.add("test");

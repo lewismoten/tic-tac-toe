@@ -14,6 +14,10 @@ function TicTacToeBaseStrategy() {
 
   };
 
+  this.getName = function() {
+    return "Unnamed";
+  };
+
   this.isOpponentInRow = function(board, row) {
     return board.getMarks(row).indexOf(board.getOpponent()) !== -1;
   };
@@ -25,4 +29,21 @@ function TicTacToeBaseStrategy() {
   this.isEmptyInRow = function(board, row) {
     return board.getMarks(row).indexOf(board.noPlayerToken) !== -1;
   };
+
+  this.noDecision = function() {
+    return {
+      name: this.getName(),
+      canAct: false,
+      action: null
+    };
+  }
+
+  this.decision = function(board, cell) {
+    return {
+      name: this.getName(),
+      canAct: true,
+      action: board.getPosition(cell)
+    };
+
+  }
 }

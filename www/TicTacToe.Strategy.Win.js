@@ -10,11 +10,6 @@ function TicTacToeWinStrategy() {
 
     base.validatePlayArguments(arguments);
 
-    var decision = {
-        canAct: false,
-        action: null
-      };
-
     for(var rowIndex = 0; rowIndex < base.rows.length; rowIndex++) {
       var row = base.rows[rowIndex];
       var myCount = 0;
@@ -36,12 +31,12 @@ function TicTacToeWinStrategy() {
       }
 
       if(myCount == 2 && myWin != -1) {
-        decision.canAct = true;
-        decision.action = board.getPosition(myWin);
-        return decision;
+        return this.decision(board, myWin);
       }
     }
 
-    return decision;
+    return this.noDecision();
   };
 }
+
+TicTacToeWinStrategy.prototype = new TicTacToeBaseStrategy();

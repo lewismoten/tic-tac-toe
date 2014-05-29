@@ -10,28 +10,27 @@ function TicTacToeTakeOppositeCornerStrategy() {
 
     base.validatePlayArguments(arguments);
 
-    var decision = {
-        canAct: false,
-        action: null
-      };
+    var corners = [
+      [1, 9],
+      [9, 1],
+      [3, 7],
+      [7, 3]
+    ];
 
-    if(board.isOpponentAt(1) && board.isEmptyAt(9)) {
-      decision.canAct = true;
-      decision.action = board.getPosition(9);
-    }
-    else if(board.isOpponentAt(9) && board.isEmptyAt(1)) {
-      decision.canAct = true;
-      decision.action = board.getPosition(1);
-    }
-    else if(board.isOpponentAt(3) && board.isEmptyAt(7)) {
-      decision.canAct = true;
-      decision.action = board.getPosition(7);
-    }
-    else if(board.isOpponentAt(7) && board.isEmptyAt(3)) {
-      decision.canAct = true;
-      decision.action = board.getPosition(3);
+    for(var i = 0; i < corners.length; i++) {
+
+      var corner = corners[i][0];
+
+      var oppositeCorner = corners[i][1]
+
+      if(board.isOpponentAt(corner)
+      && board.isEmptyAt(oppositeCorner)) {
+        return this.decision(board, oppositeCorner);
+      }
     }
 
-    return decision;
+    return this.noDecision();
   };
 }
+
+TicTacToeTakeOppositeCornerStrategy.prototype = new TicTacToeBaseStrategy();

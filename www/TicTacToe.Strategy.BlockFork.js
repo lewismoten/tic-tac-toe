@@ -10,11 +10,6 @@ function TicTacToeBlockForkStrategy() {
 
     base.validatePlayArguments(arguments);
 
-    var decision = {
-        canAct: false,
-        action: null
-      };
-
     for(var i = 0; i < base.rows.length; i++) {
 
       var row1 = base.rows[i];
@@ -42,16 +37,16 @@ function TicTacToeBlockForkStrategy() {
             }
 
             if(board.isEmptyAt(cell)) {
-              decision.canAct = true;
-              decision.action = board.getPosition(cell);
-              return decision;
+              return this.decision(board, cell);
             }
           }
         }
       }
     }
 
-    return decision;
+    return this.noDecision();
   };
 
 }
+
+TicTacToeBlockForkStrategy.prototype = new TicTacToeBaseStrategy();
