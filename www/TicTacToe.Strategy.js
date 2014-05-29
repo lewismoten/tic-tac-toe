@@ -28,6 +28,7 @@ function TicTacToeStrategy() {
   this.add(new TicTacToeBlockWinStrategy());
   this.add(new TicTacToeForkStrategy());
   this.add(new TicTacToeBlockForkStrategy());
+  this.add(new TicTacToeTakeCornerOnFirstMoveStrategy());
   this.add(new TicTacToeTakeCenterStrategy());
   this.add(new TicTacToeTakeOppositeCornerStrategy());
   this.add(new TicTacToeTakeCornerStrategy());

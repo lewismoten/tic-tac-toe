@@ -9,6 +9,7 @@ var takeCornerName = new TicTacToeTakeCornerStrategy().getName();
 var takeSideName = new TicTacToeTakeSideStrategy().getName();
 var forkName = new TicTacToeForkStrategy().getName();
 var blockForkName = new TicTacToeBlockForkStrategy().getName();
+var takeCornerOnFirstMoveName = new TicTacToeTakeCornerOnFirstMoveStrategy().getName();
 
 module( "Strategy", {
   setup: function() {
@@ -55,6 +56,10 @@ test("has block win", function() {
   ok(strategy.hasStrategy(blockWinName));
 });
 
+test("has take corner on first move", function() {
+  ok(strategy.hasStrategy(takeCornerOnFirstMoveName));
+});
+
 test("has take center", function() {
   ok(strategy.hasStrategy(takeCenterName));
 });
@@ -83,8 +88,12 @@ test("forks before blocking opponents fork", function() {
   ok(strategy.priorityOf(forkName) < strategy.priorityOf(blockForkName));
 });
 
-test("block opponents fork before taking center", function() {
-  ok(strategy.priorityOf(blockForkName) < strategy.priorityOf(takeCenterName));
+test("block opponents fork before taking corner on first move", function() {
+  ok(strategy.priorityOf(blockForkName) < strategy.priorityOf(takeCornerOnFirstMoveName));
+});
+
+test("takes corner on first move before taking center", function() {
+  ok(strategy.priorityOf(takeCornerOnFirstMoveName) < strategy.priorityOf(takeCenterName));
 });
 
 test("takes center before taking an opponents opposite corner", function() {
@@ -118,66 +127,84 @@ test("can play", function() {
   ok(decision.canAct);
 });
 
-test("first play takes the center", function() {
+test("first play takes a corner", function() {
+  var decision = strategy.play(board);
+  equal(decision.name, takeCornerOnFirstMoveName);
+  deepEqual(decision.action, board.getPosition(1));
+  board.mark(decision.action.x, decision.action.y);
+  equal(board.toString(), "[X  |   |   ]");
+});
+
+test("second play takes center", function() {
+  board.importPlay(1);
   var decision = strategy.play(board);
   equal(decision.name, takeCenterName);
   deepEqual(decision.action, board.getPosition(5));
   board.mark(decision.action.x, decision.action.y);
-  equal(board.toString(), "[   | X |   ]");
+  equal(board.toString(), "[X  | O |   ]");
 });
 
-test("second play takes a corner", function() {
-  board.importPlay(5);
+test("third play takes a corner", function() {
+  board.importPlay(15);
   var decision = strategy.play(board);
   equal(decision.name, takeCornerName);
-  deepEqual(decision.action, board.getPosition(1));
+  deepEqual(decision.action, board.getPosition(3));
   board.mark(decision.action.x, decision.action.y);
-  equal(board.toString(), "[O  | X |   ]");
+  equal(board.toString(), "[X X| O |   ]");
 });
 
-test("third play takes a corner opposite of the opponent", function() {
-  board.importPlay(51);
-  var decision = strategy.play(board);
-  equal(decision.name, takeOppositeCornerName);
-  deepEqual(decision.action, board.getPosition(9));
-  board.mark(decision.action.x, decision.action.y);
-  equal(board.toString(), "[O  | X |  X]");
-});
-
-test("fourth play blocks a fork", function() {
-  board.importPlay(519);
-  var decision = strategy.play(board);
-  equal(decision.name, blockForkName);
-  deepEqual(decision.action, board.getPosition(6));
-  board.mark(decision.action.x, decision.action.y);
-  equal(board.toString(), "[O  | XO|  X]");
-});
-
-test("fifth play creates a fork", function() {
-  board.importPlay(5196);
-  var decision = strategy.play(board);
-  equal(decision.name, forkName);
-  deepEqual(decision.action, board.getPosition(8));
-  board.mark(decision.action.x, decision.action.y);
-  equal(board.toString(), "[O  | XO| XX]");
-});
-
-test("sixth play blocks a win", function() {
-  board.importPlay(51968);
+test("fourth play blocks a win", function() {
+  board.importPlay(153);
   var decision = strategy.play(board);
   equal(decision.name, blockWinName);
-  deepEqual(decision.action, board.getPosition(7));
-  board.mark(decision.action.x, decision.action.y);
-  equal(board.toString(), "[O  | XO|OXX]");
-});
-
-test("seventh play wins", function() {
-  board.importPlay(519687);
-  var decision = strategy.play(board);
-  equal(decision.name, winName);
   deepEqual(decision.action, board.getPosition(2));
   board.mark(decision.action.x, decision.action.y);
-  equal(board.toString(), "[OX | XO|OXX]");
+  equal(board.toString(), "[XOX| O |   ]");
+});
+
+test("fifth play blocks a win", function() {
+  board.importPlay(1532);
+  var decision = strategy.play(board);
+  equal(decision.name, blockWinName);
+  deepEqual(decision.action, board.getPosition(8));
+  board.mark(decision.action.x, decision.action.y);
+  equal(board.toString(), "[XOX| O | X ]");
+});
+
+test("sixth play blocks a fork", function() {
+  board.importPlay(15328);
+  var decision = strategy.play(board);
+  equal(decision.name, blockForkName);
+  deepEqual(decision.action, board.getPosition(7));
+  board.mark(decision.action.x, decision.action.y);
+  equal(board.toString(), "[XOX| O |OX ]");
+});
+
+test("seventh play takes corner", function() {
+  board.importPlay(153287);
+  var decision = strategy.play(board);
+  equal(decision.name, takeCornerName);
+  deepEqual(decision.action, board.getPosition(9));
+  board.mark(decision.action.x, decision.action.y);
+  equal(board.toString(), "[XOX| O |OXX]");
+});
+
+test("eigth play blocks a win", function() {
+  board.importPlay(1532879);
+  var decision = strategy.play(board);
+  equal(decision.name, blockWinName);
+  deepEqual(decision.action, board.getPosition(6));
+  board.mark(decision.action.x, decision.action.y);
+  equal(board.toString(), "[XOX| OO|OXX]");
+});
+
+test("ninth play blocks a win", function() {
+  board.importPlay(15328796);
+  var decision = strategy.play(board);
+  equal(decision.name, blockWinName);
+  deepEqual(decision.action, board.getPosition(4));
+  board.mark(decision.action.x, decision.action.y);
+  equal(board.toString(), "[XOX|XOO|OXX]");
 });
 
 test("can not win", function() {
