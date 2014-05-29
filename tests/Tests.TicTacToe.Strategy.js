@@ -118,6 +118,68 @@ test("can play", function() {
   ok(decision.canAct);
 });
 
+test("first play takes the center", function() {
+  var decision = strategy.play(board);
+  equal(decision.name, takeCenterName);
+  deepEqual(decision.action, board.getPosition(5));
+  board.mark(decision.action.x, decision.action.y);
+  equal(board.toString(), "[   | X |   ]");
+});
+
+test("second play takes a corner", function() {
+  board.importPlay(5);
+  var decision = strategy.play(board);
+  equal(decision.name, takeCornerName);
+  deepEqual(decision.action, board.getPosition(1));
+  board.mark(decision.action.x, decision.action.y);
+  equal(board.toString(), "[O  | X |   ]");
+});
+
+test("third play takes a corner opposite of the opponent", function() {
+  board.importPlay(51);
+  var decision = strategy.play(board);
+  equal(decision.name, takeOppositeCornerName);
+  deepEqual(decision.action, board.getPosition(9));
+  board.mark(decision.action.x, decision.action.y);
+  equal(board.toString(), "[O  | X |  X]");
+});
+
+test("fourth play blocks a fork", function() {
+  board.importPlay(519);
+  var decision = strategy.play(board);
+  equal(decision.name, blockForkName);
+  deepEqual(decision.action, board.getPosition(6));
+  board.mark(decision.action.x, decision.action.y);
+  equal(board.toString(), "[O  | XO|  X]");
+});
+
+test("fifth play creates a fork", function() {
+  board.importPlay(5196);
+  var decision = strategy.play(board);
+  equal(decision.name, forkName);
+  deepEqual(decision.action, board.getPosition(8));
+  board.mark(decision.action.x, decision.action.y);
+  equal(board.toString(), "[O  | XO| XX]");
+});
+
+test("sixth play blocks a win", function() {
+  board.importPlay(51968);
+  var decision = strategy.play(board);
+  equal(decision.name, blockWinName);
+  deepEqual(decision.action, board.getPosition(7));
+  board.mark(decision.action.x, decision.action.y);
+  equal(board.toString(), "[O  | XO|OXX]");
+});
+
+test("seventh play wins", function() {
+  board.importPlay(519687);
+  var decision = strategy.play(board);
+  equal(decision.name, winName);
+  deepEqual(decision.action, board.getPosition(2));
+  board.mark(decision.action.x, decision.action.y);
+  equal(board.toString(), "[OX | XO|OXX]");
+});
+
 test("can not win", function() {
     while(!board.isGameOver()) {
       var decision = strategy.play(board);
