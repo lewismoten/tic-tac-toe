@@ -1,3 +1,5 @@
+![tic-tac-toe: Mobile offline tic-tac-toe in HTML5](docs/images/social-preview.png)
+
 tic-tac-toe
 ===========
 
